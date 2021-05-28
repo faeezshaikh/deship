@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 declare function signup(username,pass,email): void;
+import { ToastController } from '@ionic/angular';
 declare let Moralis;
 
 
@@ -13,14 +14,16 @@ export class SignupPage implements OnInit {
   username;
   password;
   email;
+  processingSignin=false;
 
-  constructor() {
+  constructor(public toastController: ToastController) {
   }
 
   ngOnInit() {
   }
 
 async signmeup(){
+  this.processingSignin=true;
     console.log('username:' ,this.username);
     console.log('password:' ,this.password);
     console.log('email:' ,this.email);
@@ -35,10 +38,15 @@ async signmeup(){
 
     try {
       await user.signUp();
+      this.processingSignin=false;
       // Hooray! Let them use the app now.
     } catch (error) {
+      this.processingSignin=false;
       // Show the error message somewhere and let the user try again.
-      console.log('Error: ' + error.code + ' ' + error.message);
+      const msg = 'Error: ' + error.code + ' ' + error.message;
+      console.log(msg);
+      this.presentToast(msg);
+
 
     }
 
@@ -56,6 +64,18 @@ async signmeup(){
 async  logOut() {
     await Moralis.User.logOut();
     console.log('logged out');
+}
+
+isprocessing() {
+  return !this.isprocessing;
+}
+
+async presentToast(msg) {
+  const toast = await this.toastController.create({
+    message: msg,
+    duration: 2000
+  });
+  toast.present();
 }
 
 

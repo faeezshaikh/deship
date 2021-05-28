@@ -36,10 +36,10 @@
                 <!-- <button  ion-button full block color="primary" (click)="signmeup()" id="submitButton"  [disabled]="!meterForm.valid" ><ion-icon name="log-in"></ion-icon>&nbsp;&nbsp;Login</button> -->
                   <p>&nbsp;</p>
 
-                <ion-button shape="round" fill="outline">Clear
+                <ion-button shape="round" fill="outline" [disabled]="processingSignin">Clear
                   <ion-icon slot="start" name="close-outline" (click)="signmeup()" id="submitButton" ></ion-icon>
                 </ion-button>
-                <ion-button shape="round" (click)="signmeup()" >
+                <ion-button shape="round" (click)="signmeup()" [disabled]='processingSignin'>
                   Sign up
                   <ion-icon slot="start" name="log-in-outline"  id="submitButton" ></ion-icon>
                 </ion-button>
@@ -55,20 +55,14 @@
 
     <ion-row >
 
-        <div style="text-align: center">
-            <ion-spinner  *ngIf="processingSignin" name="circles"></ion-spinner>
-          </div>
+
         <ion-col>&nbsp;</ion-col>
         <ion-col>
-            <div style="text-align:center">
 
-                  <!-- <button margin-bottom ion-button clear small (click)="navToRegister()">Register</button> -->
-              </div>
-               <div style="text-align:center">
-
-                   <!-- <button margin-bottom ion-button clear small (click)="navToForgotPassword()">Forgot Password</button> -->
-              </div>
               <p>&nbsp;</p>
+              <div style="text-align: center">
+                <ion-spinner  *ngIf="processingSignin" name="circles" color="primary"></ion-spinner>
+              </div>
                <div style="text-align:center">
                   <small>For help or questions emails us at </small><br/>
                   <ion-chip color="primary">
