@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -8,28 +9,15 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private router:Router) {}
+  constructor(private router:Router,private menu: MenuController) {}
 
 
   ngOnInit() {
-
-    console.log('auth value:', localStorage.getItem('authenticated)'));
-
-    if(localStorage.getItem('authenticated)') === 'yes') {
-      console.log("User is authenticated");
-      this.router.navigateByUrl('/folder/Inbox');
-
-      return true;
-    } else {
-      console.log("User is not authenticated");
-      this.router.navigateByUrl('/');
-      return false;
-    }
-
   }
 
   login() {
     localStorage.setItem('authenticated','yes');
+    this.menu.enable(true);
     this.router.navigateByUrl('/folder/Inbox');
 
   }

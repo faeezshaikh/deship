@@ -7,7 +7,6 @@ const routes: Routes = [
     path: '',
     // redirectTo: 'folder/Inbox',
     redirectTo: 'login',
-
     pathMatch: 'full'
   },
   {
@@ -27,10 +26,6 @@ const routes: Routes = [
     path: 'news/:id',
     loadChildren: () => import('./news/news.module').then( m => m.NewsPageModule),
     canLoad: [AuthGuard]
-  },
-  {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   }
 ];
 

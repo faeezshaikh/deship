@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute , Router} from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-folder',
@@ -9,7 +10,9 @@ import { ActivatedRoute , Router} from '@angular/router';
 export class FolderPage implements OnInit {
   public folder: string;
 
-  constructor(private activatedRoute: ActivatedRoute,private router:Router) { }
+  constructor(private activatedRoute: ActivatedRoute,
+    private menu: MenuController,
+    private router:Router) { }
 
 
   ngOnInit() {
@@ -20,6 +23,7 @@ export class FolderPage implements OnInit {
 
   logout() {
     localStorage.removeItem('authenticated');
+    this.menu.enable(false);
     this.router.navigateByUrl('/');
 
   }
