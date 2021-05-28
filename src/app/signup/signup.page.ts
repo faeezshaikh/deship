@@ -39,6 +39,10 @@ async signmeup(){
     try {
       await user.signUp();
       this.processingSignin=false;
+      this.username='';
+      this.password='';
+      this.email='';
+      this.presentToast('Success: Try logging in now.');
       // Hooray! Let them use the app now.
     } catch (error) {
       this.processingSignin=false;
