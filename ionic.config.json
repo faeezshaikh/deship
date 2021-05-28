@@ -1,0 +1,7 @@
+{
+  "name": "deship",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
