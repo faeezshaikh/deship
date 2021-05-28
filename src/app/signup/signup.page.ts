@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 declare function signup(username,pass,email): void;
 import { ToastController } from '@ionic/angular';
 declare let Moralis;
@@ -16,7 +17,7 @@ export class SignupPage implements OnInit {
   email;
   processingSignin=false;
 
-  constructor(public toastController: ToastController) {
+  constructor(public toastController: ToastController,private router:Router) {
   }
 
   ngOnInit() {
@@ -82,5 +83,8 @@ async presentToast(msg) {
   toast.present();
 }
 
+gotologin(){
+  this.router.navigateByUrl('/login');
+}
 
 }

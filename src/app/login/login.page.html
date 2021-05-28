@@ -1,4 +1,91 @@
 <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>&nbsp;</ion-col>
+      <ion-col>
+          <div style="text-align:center">
+          <ion-card >
+              <ion-card-header>
+                <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                <ion-card-title>Card Title</ion-card-title> -->
+                <img class = "full-image"   src = "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2017_26/2053956/170627-better-grocery-store-main-se-539p-2053956.jpg">
+              </ion-card-header>
+
+              <ion-card-content>
+                  <form #meterForm="ngForm">
+                <ion-item>
+                  <ion-label position="stacked">Username</ion-label>
+                  <ion-input  [(ngModel)]="username" name="id" type="id" id='id' required minlength="5"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="stacked">Password</ion-label>
+                  <ion-input [(ngModel)]="password" name="password" id='pwd' type="password" required></ion-input>
+                </ion-item>
+
+
+                <!-- <button  ion-button full block color="primary" (click)="signmeup()" id="submitButton"  [disabled]="!meterForm.valid" ><ion-icon name="log-in"></ion-icon>&nbsp;&nbsp;Login</button> -->
+                  <p>&nbsp;</p>
+
+                <ion-button shape="round" fill="outline" [disabled]="processingSignin">Clear
+                  <ion-icon slot="start" name="close-outline" (click)="login()" id="submitButton" ></ion-icon>
+                </ion-button>
+                <ion-button shape="round" (click)="login()" [disabled]='processingSignin'>
+                  Login
+                  <ion-icon slot="start" name="log-in-outline"  id="submitButton" ></ion-icon>
+                </ion-button>
+
+
+              </form>
+              </ion-card-content>
+            </ion-card>
+            </div>
+            <p>&nbsp;</p>
+            <div style="text-align: center">
+              <ion-label>Don't have an account?  <ion-label color="primary" (click)="gotosignup()">Sign up</ion-label></ion-label>
+            </div>
+
+
+      </ion-col>
+      <ion-col>&nbsp;</ion-col>
+    </ion-row>
+
+    <ion-row >
+
+
+        <ion-col>&nbsp;</ion-col>
+        <ion-col>
+
+              <p>&nbsp;</p>
+              <div style="text-align: center">
+                <ion-spinner  *ngIf="processingSignin" name="circles" color="primary"></ion-spinner>
+              </div>
+               <div style="text-align:center">
+                  <small>For feedback or comments emails me at </small><br/>
+                  <ion-chip color="primary">
+              <ion-label color="primary">faeez.shaikh@gmail.com</ion-label>
+            </ion-chip>
+            </div>
+        </ion-col>
+        <ion-col>&nbsp;</ion-col>
+
+    </ion-row>
+
+      </ion-grid>
+
+</ion-content>
+
+
+
+
+
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>login</ion-title>
   </ion-toolbar>
@@ -9,4 +96,4 @@
   <ion-button expand="block" (click) ="login()" >Login</ion-button>
 
   <ion-label color="primary" (click)="gotosignup()">Sign up</ion-label>
-</ion-content>
+</ion-content> -->
