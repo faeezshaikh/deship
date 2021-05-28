@@ -1,28 +1,28 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Sign up</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-grid *ngIf="!isIEOrEdge">
+  <ion-grid>
     <ion-row>
       <ion-col>&nbsp;</ion-col>
       <ion-col>
           <div style="text-align:center">
-          <ion-card [ngClass]="{'barrel_roll': doRoll == true }">
+          <ion-card >
               <ion-card-header>
                 <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
                 <ion-card-title>Card Title</ion-card-title> -->
-                <img class = "full-image"   src = "http://media-cdn.wehco.com/img/photos/2011/07/14/ameren_t350_hbc8aa6c5309c63331b1352d9b9ed7beb8a28927b.jpg">
+                <img class = "full-image"   src = "https://www.redwoodlogistics.com/wp-content/uploads/2019/05/Less-Than-Truckload-Shipping-1.png">
               </ion-card-header>
 
               <ion-card-content>
                   <form #meterForm="ngForm">
                 <ion-item>
                   <ion-label position="stacked">Username</ion-label>
-                  <ion-input  [(ngModel)]="id" name="id" type="id" id='id' required minlength="5"></ion-input>
+                  <ion-input  [(ngModel)]="username" name="id" type="id" id='id' required minlength="5"></ion-input>
                 </ion-item>
                 <ion-item>
                   <ion-label position="stacked">Password</ion-label>
@@ -33,7 +33,18 @@
                   <ion-input [(ngModel)]="email" name="password" id='email' type="email" required></ion-input>
                 </ion-item>
 
-                <button  ion-button full block color="primary" (click)="signMeIn()" id="submitButton"  [disabled]="!meterForm.valid" ><ion-icon name="log-in"></ion-icon>&nbsp;&nbsp;Login</button>
+                <!-- <button  ion-button full block color="primary" (click)="signmeup()" id="submitButton"  [disabled]="!meterForm.valid" ><ion-icon name="log-in"></ion-icon>&nbsp;&nbsp;Login</button> -->
+                  <p>&nbsp;</p>
+
+                <ion-button shape="round" fill="outline">Clear
+                  <ion-icon slot="start" name="close-outline" (click)="signmeup()" id="submitButton" ></ion-icon>
+                </ion-button>
+                <ion-button shape="round"  >
+                  Sign up
+                  <ion-icon slot="start" name="log-in-outline" (click)="signmeup()" id="submitButton" ></ion-icon>
+                </ion-button>
+
+
               </form>
               </ion-card-content>
             </ion-card>
@@ -61,7 +72,7 @@
                <div style="text-align:center">
                   <small>For help or questions emails us at </small><br/>
                   <ion-chip color="primary">
-              <ion-label color="white">faeez.shaikh@gmail.com</ion-label>
+              <ion-label color="primary">faeez.shaikh@gmail.com</ion-label>
             </ion-chip>
             </div>
         </ion-col>
