@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'news/:id',
     loadChildren: () => import('./news/news.module').then( m => m.NewsPageModule),
     canLoad: [AuthGuard]
+  },
+  {
+    path: 'signup',
+    loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
   }
 ];
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -20,5 +21,9 @@ export class LoginPage implements OnInit {
     this.menu.enable(true);
     this.router.navigateByUrl('/folder/Inbox');
 
+  }
+
+  gotosignup(){
+    this.router.navigateByUrl('/signup');
   }
 }

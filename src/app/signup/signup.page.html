@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sign up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid *ngIf="!isIEOrEdge">
+    <ion-row>
+      <ion-col>&nbsp;</ion-col>
+      <ion-col>
+          <div style="text-align:center">
+          <ion-card [ngClass]="{'barrel_roll': doRoll == true }">
+              <ion-card-header>
+                <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                <ion-card-title>Card Title</ion-card-title> -->
+                <img class = "full-image"   src = "http://media-cdn.wehco.com/img/photos/2011/07/14/ameren_t350_hbc8aa6c5309c63331b1352d9b9ed7beb8a28927b.jpg">
+              </ion-card-header>
+
+              <ion-card-content>
+                  <form #meterForm="ngForm">
+                <ion-item>
+                  <ion-label position="stacked">Username</ion-label>
+                  <ion-input  [(ngModel)]="id" name="id" type="id" id='id' required minlength="5"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="stacked">Password</ion-label>
+                  <ion-input [(ngModel)]="password" name="password" id='pwd' type="password" required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="stacked">Email</ion-label>
+                  <ion-input [(ngModel)]="email" name="password" id='email' type="email" required></ion-input>
+                </ion-item>
+
+                <button  ion-button full block color="primary" (click)="signMeIn()" id="submitButton"  [disabled]="!meterForm.valid" ><ion-icon name="log-in"></ion-icon>&nbsp;&nbsp;Login</button>
+              </form>
+              </ion-card-content>
+            </ion-card>
+            </div>
+      </ion-col>
+      <ion-col>&nbsp;</ion-col>
+    </ion-row>
+
+    <ion-row >
+
+        <div style="text-align: center">
+            <ion-spinner  *ngIf="processingSignin" name="circles"></ion-spinner>
+          </div>
+        <ion-col>&nbsp;</ion-col>
+        <ion-col>
+            <div style="text-align:center">
+
+                  <!-- <button margin-bottom ion-button clear small (click)="navToRegister()">Register</button> -->
+              </div>
+               <div style="text-align:center">
+
+                   <!-- <button margin-bottom ion-button clear small (click)="navToForgotPassword()">Forgot Password</button> -->
+              </div>
+              <p>&nbsp;</p>
+               <div style="text-align:center">
+                  <small>For help or questions emails us at </small><br/>
+                  <ion-chip color="primary">
+              <ion-label color="white">faeez.shaikh@gmail.com</ion-label>
+            </ion-chip>
+            </div>
+        </ion-col>
+        <ion-col>&nbsp;</ion-col>
+
+    </ion-row>
+
+      </ion-grid>
+
+</ion-content>
