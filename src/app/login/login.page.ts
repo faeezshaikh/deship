@@ -20,7 +20,10 @@ export class LoginPage implements OnInit {
     public toastController: ToastController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.username = '';
+    this.password = '';
+  }
 
   gotosignup() {
     this.router.navigateByUrl('/signup');

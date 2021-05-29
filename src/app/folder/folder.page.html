@@ -1,26 +1,130 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ folder }}</ion-title>
+    <ion-buttons *ngIf="ethAddress==='none'" slot="secondary">
+      Connect&nbsp;
+      <button ion-button outline block large color="primary" style= "border-radius: 30px; background-color:#427feb;color:white"(click)="walletConnect2()">&nbsp;<ion-icon name="wallet" style="font-size: 2rem"></ion-icon></button>
+    </ion-buttons>
+
+    <ion-buttons *ngIf="ethAddress!=='none'" slot="secondary">
+
+      <ion-button ion-button block large  style= "border-radius: 30px; background-color:rgb(239, 244, 245);color:#427feb; font-size:20px"(click)="walletConnect2()">&nbsp;{{ethAddress }}</ion-button>
+    </ion-buttons>
+
+    <!-- <ion-buttons slot="secondary">
+      <ion-icon name="search"></ion-icon>
+  </ion-buttons> -->
   </ion-toolbar>
+
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <!-- <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">{{ folder }}</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
 
-  <div id="container">
+  <!-- <div id="container">
     <strong class="capitalize">{{ folder }}</strong>
     <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  </div> -->
+
+  <!-- List of Sliding Items -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <div style="text-align:center">
+            <ion-list>
+              <ion-item-sliding>
+                <ion-item>
+                  <ion-label>Item</ion-label>
+                </ion-item>
+                <ion-item-options side="end">
+                  <ion-item-option >Unread</ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+
+              <ion-item-sliding>
+                <ion-item>
+                  <ion-label>Item</ion-label>
+                </ion-item>
+                <ion-item-options side="end">
+                  <ion-item-option >Unread</ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
 
 
-  <ion-button expand="block" (click) ="logout()" >Logout</ion-button>
-  <ion-button expand="block" (click) ="walletConnect()" >Connect</ion-button>
-  <ion-button expand="block" (click) ="getBalances()" >Balances</ion-button>
+
+            <!-- Scrollable Segment -->
+            <ion-segment scrollable value="heart"  [(ngModel)]="segment" >
+              <ion-segment-button value="home">
+                <ion-icon name="home"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="heart">
+                <ion-icon name="heart"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="pin">
+                <ion-icon name="pin"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="star">
+                <ion-icon name="star"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="call">
+                <ion-icon name="call"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="globe">
+                <ion-icon name="globe"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="basket">
+                <ion-icon name="basket"></ion-icon>
+              </ion-segment-button>
+            </ion-segment>
+
+
+
+            <div [ngSwitch]="segment">
+              <ion-card *ngSwitchCase="'home'">
+                <ion-card-header>
+                  First Content
+                </ion-card-header>
+                <ion-card-content>
+                  First Content here
+                </ion-card-content>
+              </ion-card>
+
+              <ion-card *ngSwitchCase="'heart'">
+                <ion-card-header>
+                  Second Header
+                </ion-card-header>
+                <ion-card-content>
+                  Second content here
+                </ion-card-content>
+              </ion-card>
+
+              <ion-card *ngSwitchCase="'pin'">
+                <ion-card-header>
+                  Third Header
+                </ion-card-header>
+                <ion-card-content>
+                  Third content
+                </ion-card-content>
+              </ion-card>
+            </div>
+              <ion-button expand="block" (click) ="logout()" >Logout</ion-button>
+              <ion-button expand="block" (click) ="getBalances()" >Balances</ion-button>
+              </div>
+      </ion-col>
+      <ion-col></ion-col>
+      </ion-row>
+      </ion-grid>
+
+
 </ion-content>
