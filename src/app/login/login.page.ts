@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 declare let Moralis;
 
@@ -10,39 +11,42 @@ declare let Moralis;
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
   username;
   password;
   processingSignin;
-  constructor(private router:Router,private menu: MenuController) {}
+  constructor(
+    private router: Router,
+    private menu: MenuController,
+    public toastController: ToastController
+  ) {}
 
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
-
-
-  gotosignup(){
+  gotosignup() {
     this.router.navigateByUrl('/signup');
   }
 
-
-  async  login() {
-
-    let user = new Moralis.User();
-    user.set('username', this.username);
-    user.set('password', this.password);
-
-
-
-    user = Moralis.User.current();
-    if (!user) {
-      user = await Moralis.Web3.authenticate();
+  async login() {
+    try {
+      const user = await Moralis.User.logIn(this.username, this.password);
+      console.log('logged in user:', user);
+      localStorage.setItem('authenticated', 'yes');
+      this.menu.enable(true);
+      this.router.navigateByUrl('/folder/Inbox');
+    } catch (error) {
+      this.processingSignin = false;
+      // Show the error message somewhere and let the user try again.
+      const msg = 'Error: ' + error.code + ' ' + error.message;
+      console.log(msg);
+      this.presentToast(msg);
     }
-    console.log('logged in user:', user);
-    localStorage.setItem('authenticated','yes');
-    this.menu.enable(true);
-    this.router.navigateByUrl('/folder/Inbox');
-}
+  }
 
+  async presentToast(msg) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000,
+    });
+    toast.present();
+  }
 }
