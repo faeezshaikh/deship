@@ -11,7 +11,7 @@
 
     <ion-buttons *ngIf="ethAddress!=='none'" slot="secondary">
 
-      <ion-button ion-button block large  style= "border-radius: 30px; background-color:rgb(239, 244, 245);color:#427feb; font-size:20px"(click)="walletConnect2()">&nbsp;{{ethAddress }}</ion-button>
+      <ion-button ion-button block large  style= "border-radius: 30px; background-color:rgb(239, 244, 245);color:#427feb; font-size:20px"(click)="walletConnect2()">&nbsp;{{ethAddressDisplay }}</ion-button>
     </ion-buttons>
 
     <!-- <ion-buttons slot="secondary">
@@ -120,6 +120,8 @@
             </div>
               <ion-button expand="block" (click) ="logout()" >Logout</ion-button>
               <ion-button expand="block" (click) ="getBalances()" >Balances</ion-button>
+              <ion-button expand="block" (click) ="connectoContract()" >Contract</ion-button>
+              <ion-button expand="block" (click) ="sendTxn()" >Send txn</ion-button>
               </div>
       </ion-col>
       <ion-col></ion-col>

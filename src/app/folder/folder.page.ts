@@ -10,10 +10,66 @@ declare let Moralis;
 export class FolderPage implements OnInit {
   public folder: string;
   ethAddress:any = 'none';
+  ethAddressDisplay:any = 'none';
+  abi:any;
 
   constructor(private activatedRoute: ActivatedRoute,
     private menu: MenuController,
-    private router:Router) { }
+    private router:Router) {
+
+
+      this.abi = [
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "initMessage",
+              "type": "string"
+            }
+          ],
+          "payable": false,
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "constant": false,
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "newMessage",
+              "type": "string"
+            }
+          ],
+          "name": "update",
+          "outputs": [],
+          "payable": false,
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "constant": true,
+          "inputs": [],
+          "name": "message",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "payable": false,
+          "stateMutability": "view",
+          "type": "function"
+        }
+      ];
+
+
+
+
+
+
+
+    }
 
 
   ngOnInit() {
@@ -35,13 +91,14 @@ async walletConnect2(){
 
   const add = await Moralis.Web3.authenticate();
   // this.ethAddress = add.get('ethAddress');
-  console.log('address: ',this.ethAddress);
-  localStorage.setItem('ethAddr', this.ethAddress);
   const tmpAdd = add.get('ethAddress');
+  console.log('address: ',tmpAdd);
+  localStorage.setItem('ethAddr', tmpAdd);
   const last5 =  tmpAdd.substr(tmpAdd.length - 5);
   const first5 =  tmpAdd.substring(0,4);
   console.log(first5+'...'+last5);
-  this.ethAddress = first5+'...'+last5;
+  this.ethAddressDisplay = first5+'...'+last5;
+  this.ethAddress = add.get('ethAddress');
 
 
 
@@ -68,4 +125,36 @@ async walletConnect2(){
    }
   }
 
+  async connectoContract(){
+
+
+    const web3 = await Moralis.Web3.enable();
+    var contract = new web3.eth.Contract(this.abi, '0x65a11dE5F240D1Fe5997721301EF423700131e60');
+
+// call constant function (synchronous way)
+var msg = contract.methods.message().call().then(function(resp){
+  console.log('msg='+resp);
+  return resp;
+});
+
+console.log('Resp: ',msg);
+
+
+    console.log('Default block:',contract.defaultBlock);
+
+
+
+
+  }
+
+  async sendTxn(){
+    // using the callback
+
+    const web3 = await Moralis.Web3.enable();
+    var contract = new web3.eth.Contract(this.abi, '0x65a11dE5F240D1Fe5997721301EF423700131e60');
+contract.methods.update('Allahahfiz').send({from: this.ethAddress}, function(error, transactionHash){
+    console.log('Done',transactionHash);
+
+});
+  }
 }
