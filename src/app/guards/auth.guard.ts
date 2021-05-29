@@ -8,13 +8,13 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanLoad {
   constructor(private router:Router) {}
   canLoad() {
-    const isAuthenticated = !!(+localStorage.getItem('authenticated)'));
+    const isAuthenticated = (localStorage.getItem('authenticated') === 'yes') ? true: false;
     if(isAuthenticated) {
-      console.log("User is authenticated");
+      console.log('User is authenticated');
 
       return true;
     } else {
-      console.log("User is not authenticated");
+      console.log('User is not authenticated');
       const navigation = this.router.getCurrentNavigation();
       console.log('current navigation:',navigation);
 

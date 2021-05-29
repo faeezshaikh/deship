@@ -28,6 +28,11 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
+    path: 'listpackages',
+    loadChildren: () => import('./listpackages/listpackages.module').then( m => m.ListpackagesPageModule),
+    canLoad: [AuthGuard]
+  },
+  {
     path: 'signup',
     loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
   }
