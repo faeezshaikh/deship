@@ -23,10 +23,19 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.username = '';
     this.password = '';
+    this.isLoggedIn();
   }
 
   gotosignup() {
     this.router.navigateByUrl('/signup');
+  }
+
+
+  isLoggedIn() {
+    if(localStorage.getItem('authenticated') === 'yes') {
+      this.menu.enable(true);
+      this.router.navigateByUrl('/folder/Inbox');
+    }
   }
 
   async login() {
