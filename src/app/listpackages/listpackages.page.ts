@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { MoralisService } from '../services/moralis.service';
 declare let Moralis;
 
@@ -12,11 +13,15 @@ declare let Moralis;
 export class ListpackagesPage implements OnInit {
   filterTerm: string;
 
+  ethAddress:any = 'none';
+  ethAddressDisplay:any = 'none';
+
   packageList: any[] = [];
 
   isLoading = false;
 
-  constructor(private router : Router,private moralisService: MoralisService) {
+  constructor(private router : Router,private moralisService: MoralisService,
+    private alertController: AlertController) {
 
     // this.retrieveList2();
     console.log(' Inside constructor');
@@ -26,6 +31,18 @@ export class ListpackagesPage implements OnInit {
 
      this.retrieveList2();
      console.log(' Inside ionViewWillEnter');
+
+
+     const ethAddress = localStorage.getItem('ethAddr');
+     if(ethAddress) {
+       this.ethAddress = ethAddress;
+     }
+
+     const ethAddressDisp = localStorage.getItem('ethAddrDisp');
+     if(ethAddressDisp) {
+       this.ethAddressDisplay = ethAddressDisp;
+     }
+
 
 
     }
@@ -43,6 +60,22 @@ export class ListpackagesPage implements OnInit {
     this.isLoading = false;
   }
 
+
+  async walletConnect() {
+    const resp = await this.moralisService.walletConnect2();
+    // const obj = resp.then(function(response) {
+    //  return  console.log(response);
+    // });
+    console.log('Obj:',resp);
+    this.ethAddress = resp.ethAdd;
+    this.ethAddressDisplay = resp.ethAddDisp;
+
+
+  }
+
+  walletDisconnect(){
+    this.presentAlertConfirm('Are you sure you want to disconnect your wallet?');
+  }
 
 
   removeFromList(id) {
@@ -82,5 +115,33 @@ export class ListpackagesPage implements OnInit {
       // The object was not retrieved successfully.
       // error is a Moralis.Error with an error code and message.
     });
+  }
+
+  async presentAlertConfirm(msg) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm.',
+      message: msg,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+
+            localStorage.removeItem('ethAddr');
+            localStorage.removeItem('ethAddrDisp');
+            this.ethAddress = 'none';
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

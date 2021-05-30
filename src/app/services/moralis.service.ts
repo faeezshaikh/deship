@@ -8,6 +8,8 @@ declare let Moralis;
 export class MoralisService {
 
   packageList: any[] = [];
+  public ethAddress:any = 'none';
+  public ethAddressDisplay:any = 'none';
 
   constructor() { }
 
@@ -63,6 +65,20 @@ export class MoralisService {
     });
 
 
+  }
+
+  async walletConnect2(){
+    const add = await Moralis.Web3.authenticate();
+    const tmpAdd = add.get('ethAddress');
+    console.log('address: ',tmpAdd);
+    const last5 =  tmpAdd.substr(tmpAdd.length - 5);
+    const first5 =  tmpAdd.substring(0,4);
+    console.log(first5+'...'+last5);
+    this.ethAddressDisplay = first5+'...'+last5;
+    this.ethAddress = add.get('ethAddress');
+    localStorage.setItem('ethAddr', this.ethAddress);
+    localStorage.setItem('ethAddrDisp', this.ethAddressDisplay);
+    return {ethAdd:this.ethAddress,ethAddDisp:this.ethAddressDisplay};
   }
 
   // save2(){

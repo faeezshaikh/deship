@@ -4,6 +4,15 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Packages</ion-title>
+    <ion-buttons *ngIf="ethAddress==='none'" slot="secondary">
+      Connect&nbsp;
+      <button ion-button outline block large color="primary" style= "border-radius: 30px; background-color:#427feb;color:white"(click)="walletConnect()">&nbsp;<ion-icon name="wallet" style="font-size: 2rem"></ion-icon></button>
+    </ion-buttons>
+
+    <ion-buttons *ngIf="ethAddress!=='none'" slot="secondary">
+
+      <ion-button ion-button block large  style= "border-radius: 30px; background-color:rgb(239, 244, 245);color:#427feb; font-size:15px"(click)="walletDisconnect()">&nbsp;{{ethAddressDisplay }}</ion-button>&nbsp;&nbsp;&nbsp;
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

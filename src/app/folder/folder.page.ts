@@ -87,23 +87,7 @@ export class FolderPage implements OnInit {
   }
 
 
-async walletConnect2(){
 
-  const add = await Moralis.Web3.authenticate();
-  // this.ethAddress = add.get('ethAddress');
-  const tmpAdd = add.get('ethAddress');
-  console.log('address: ',tmpAdd);
-  localStorage.setItem('ethAddr', tmpAdd);
-  const last5 =  tmpAdd.substr(tmpAdd.length - 5);
-  const first5 =  tmpAdd.substring(0,4);
-  console.log(first5+'...'+last5);
-  this.ethAddressDisplay = first5+'...'+last5;
-  this.ethAddress = add.get('ethAddress');
-
-
-
-
-}
 
   async getBalances() {
 
