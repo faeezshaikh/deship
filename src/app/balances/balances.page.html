@@ -1,9 +1,61 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>balances</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
+
+
+  <ion-card>
+    <ion-card-header>
+
+      <ion-card-subtitle><strong>Ethereum Network Balances</strong></ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-spinner  *ngIf="gettingBalances" name="circles" color="primary"></ion-spinner>
+      <span *ngIf="!gettingBalances" >
+      <ion-row  *ngFor='let token of ethBalances '>
+        {{format(token.balance)}} &nbsp; {{token.symbol || 'ERC20'}}
+    </ion-row>
+  </span>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+
+      <ion-card-subtitle><strong>Polygon Network Balances</strong></ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-spinner  *ngIf="gettingBalances" name="circles" color="primary"></ion-spinner>
+      <span *ngIf="!gettingBalances" >
+      <ion-row  *ngFor='let token of maticBalances '>
+        {{format(token.balance)}} &nbsp; {{token.symbol || 'ERC20'}}
+    </ion-row>
+  </span>
+
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card>
+    <ion-card-header>
+      <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
+      <ion-card-subtitle><strong>Binance Network Balances</strong></ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-spinner  *ngIf="gettingBalances" name="circles" color="primary"></ion-spinner>
+      <span *ngIf="!gettingBalances" >
+
+        <ion-row *ngFor='let token of bnbBalances '>
+          {{format(token.balance)}} &nbsp; {{token.symbol  || 'ERC20'}}
+        </ion-row>
+      </span>
+    </ion-card-content>
+  </ion-card>
+
+
 
 </ion-content>

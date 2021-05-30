@@ -81,6 +81,43 @@ export class MoralisService {
     return {ethAdd:this.ethAddress,ethAddDisp:this.ethAddressDisplay};
   }
 
+  async getBalances() {
+
+    const ethAddress = localStorage.getItem('ethAddr');
+    if(ethAddress) {
+
+      const maticBalances = await Moralis.Web3.getAllERC20( { chain: 'mumbai', address: ethAddress});
+      console.log('Balances for Matic Network: ',maticBalances);
+      // balances is array of objs. Each obj is:
+      // balance: "2475683695000000000"
+      // decimals: 18
+      // name: "Binance Coin"
+      // symbol: "BNB"
+
+      const bnbBalances = await Moralis.Web3.getAllERC20( { chain: 'binance', address: ethAddress});
+      console.log('Balances for Binance Network: ',bnbBalances);
+
+      const ethBalances = await Moralis.Web3.getAllERC20( { chain: 'eth', address: ethAddress});
+      console.log('Balances for Binance Network: ',ethBalances);
+
+      const options2 = { chain: 'binance', address: ethAddress, order: 'desc' };
+      console.log(options2);
+       const transactions = await Moralis.Web3.getTransactions(options2);
+       console.log(transactions);
+
+       return {bnbBalances,maticBalances,ethBalances};
+     } else {
+       console.log('Connect to Wallet first.');
+
+     }
+    }
+
+    format(amountInWei) {
+      const web3 = new Moralis.Web3();
+      const amountInEth = web3.utils.fromWei(amountInWei, 'ether');
+      return amountInEth;
+    }
+
   // save2(){
 
   //   var packages = [{ id: 1, sender: 'John', senderAddr:'123 Pine St. St. Louis MO 63101',senderPhone: '555-1276',senderEmail: 'faeez.shaikh@gmail.com',  receiverAddr: '234 Brook St. Chesterfield MO 63103',recieverPhone: '205-345-9545',recieverEmail: 'john@gmail.com',gems: 50, miles: 0.5, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5duF2C4wJfJfEoCTbe23miXSwN7De5wHwY5PtGs3KoP_aASn4Gg',fragile:false,confirm:false,instructions:'Please drop the package at the doorstep. Do not ring doorbell. Thanks!', status:'Ready' },
