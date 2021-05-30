@@ -1,7 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController ,PopoverController } from '@ionic/angular';
+import { BalancesPage } from '../balances/balances.page';
 import { MoralisService } from '../services/moralis.service';
 declare let Moralis;
 
@@ -21,7 +22,7 @@ export class ListpackagesPage implements OnInit {
   isLoading = false;
 
   constructor(private router : Router,private moralisService: MoralisService,
-    private alertController: AlertController) {
+    private alertController: AlertController,public popoverController: PopoverController) {
 
     // this.retrieveList2();
     console.log(' Inside constructor');
@@ -143,5 +144,18 @@ export class ListpackagesPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: BalancesPage,
+      cssClass: 'my-custom-class',
+      event: ev,
+      translucent: true
+    });
+    await popover.present();
+
+    const { role } = await popover.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 }

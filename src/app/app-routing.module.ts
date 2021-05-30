@@ -39,6 +39,10 @@ const routes: Routes = [
   {
     path: 'addpackage',
     loadChildren: () => import('./addpackage/addpackage.module').then( m => m.AddpackagePageModule)
+  },
+  {
+    path: 'balances',
+    loadChildren: () => import('./balances/balances.module').then( m => m.BalancesPageModule)
   }
 ];
 

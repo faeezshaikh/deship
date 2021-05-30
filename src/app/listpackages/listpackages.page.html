@@ -12,6 +12,7 @@
     <ion-buttons *ngIf="ethAddress!=='none'" slot="secondary">
 
       <ion-button ion-button block large  style= "border-radius: 30px; background-color:rgb(239, 244, 245);color:#427feb; font-size:15px"(click)="walletDisconnect()">&nbsp;{{ethAddressDisplay }}</ion-button>&nbsp;&nbsp;&nbsp;
+      <ion-button ion-button block   style= "border-radius: 30px; background-color:rgb(239, 244, 245);color:#427feb; font-size:15px"(click)="presentPopover($event)">&nbsp;{{ethAddressDisplay }}</ion-button>&nbsp;&nbsp;&nbsp;
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
