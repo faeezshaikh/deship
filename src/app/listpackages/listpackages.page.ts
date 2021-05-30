@@ -18,17 +18,29 @@ export class ListpackagesPage implements OnInit {
 
   constructor(private router : Router,private moralisService: MoralisService) {
 
-    this.retrieveList2();
+    // this.retrieveList2();
+    console.log(' Inside constructor');
    }
 
-  ngOnInit() {
+   ionViewWillEnter() {
+
+     this.retrieveList2();
+     console.log(' Inside ionViewWillEnter');
+
+
+    }
+
+    ngOnInit() {
+      console.log(' Inside ngOnInit');
   }
   gotoaddpage() {
     this.router.navigateByUrl('/addpackage');
   }
 
   async retrieveList2(){
+    this.isLoading = true;
     this.packageList = await this.moralisService.retrieveList();
+    this.isLoading = false;
   }
 
 

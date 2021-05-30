@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MoralisService } from '../services/moralis.service';
+import { UtilService } from '../services/util.service';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -19,7 +21,10 @@ export class AddpackagePage implements OnInit {
   delivery = false;
   fragile = false;
 
-  constructor(private router: Router,public formBuilder: FormBuilder,private moralisService:MoralisService) { }
+  constructor(private router: Router,public formBuilder: FormBuilder,
+          private utilService: UtilService,
+          private moralisService:MoralisService,
+          public alertController: AlertController) { }
 
   ngOnInit() {
 
@@ -71,16 +76,51 @@ export class AddpackagePage implements OnInit {
       return false;
     } else {
       console.log(this.ionicForm.value);
-      this.isSubmitted = false;
-      this.ionicForm.reset();
-      this.gems = 1;
-      this.days = 15;
-      this.moralisService.addToList('sender','112 ridge dr','345-345-34535','asbc@gal.com',
-                                    this.ionicForm.value.address,this.ionicForm.value.mobile,
-                                      this.ionicForm.value.email,this.ionicForm.value.range,34,'',
-                                      this.ionicForm.value.fragile,this.ionicForm.value.instructions,
-                                      this.ionicForm.value.delivery,'Open');
+      this.presentAlertConfirm('Are you sure you want to add?');
+
     }
+
+
   }
 
+
+  async presentAlertConfirm(msg) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm.',
+      message: msg,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.addConfirmed();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  addConfirmed(){
+    this.isSubmitted = false;
+    this.ionicForm.reset();
+    this.gems = 1;
+    this.days = 15;
+    this.moralisService.addToList('sender','112 ridge dr','345-345-34535','asbc@gal.com',
+                                  this.ionicForm.value.address,this.ionicForm.value.mobile,
+                                    this.ionicForm.value.email,this.ionicForm.value.range,34,'',
+                                    this.ionicForm.value.fragile,this.ionicForm.value.instructions,
+                                    this.ionicForm.value.delivery,'Open');
+    this.utilService.presentToast('Package has been successfully added.');
+    this.goback();
+  }
 }

@@ -21,9 +21,10 @@ export class MoralisService {
 
     console.log('Successfully retrieved ' + results.length + ' packages.');
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
+    this.packageList = [];
     for (let i = 0; i < results.length; i++) {
       const object = results[i];
-      console.log(object.id + ' - Sender: ' + object.get('sender') + ' Receiver: ' + object.get('receiverAddr'));
+      // console.log(object.id + ' - Sender: ' + object.get('sender') + ' Receiver: ' + object.get('receiverAddr'));
       this.packageList.push(
         {id:object.id,sender:object.get('sender'),senderAddr:object.get('senderAddr'),
          senderPhone:object.get('senderPhone'),senderEmail:object.get('senderEmail'),
@@ -60,6 +61,8 @@ export class MoralisService {
     }, (error) => {
       console.log('Error retrieve:',error);
     });
+
+
   }
 
   // save2(){
