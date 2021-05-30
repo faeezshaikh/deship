@@ -78,13 +78,6 @@ export class FolderPage implements OnInit {
 
 
 
-  logout() {
-    localStorage.removeItem('authenticated');
-    localStorage.removeItem('ethAddr');
-    this.menu.enable(false);
-    this.router.navigateByUrl('/');
-
-  }
 
 
 

@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
       console.log('logged in user:', user);
       localStorage.setItem('authenticated', 'yes');
       this.menu.enable(true);
-      this.router.navigateByUrl('/folder/Inbox');
+      this.router.navigateByUrl('/listpackages');
     } catch (error) {
       this.processingSignin = false;
       // Show the error message somewhere and let the user try again.

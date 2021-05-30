@@ -5,6 +5,12 @@
         <ion-list id="inbox-list">
           <ion-list-header>Inbox</ion-list-header>
           <ion-note>hi@ionicframework.com</ion-note>
+          <p></p>
+          <div style="text-align: center">
+
+            <ion-button (click)="logout()">Logout</ion-button>
+          </div>
+          <p></p>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
