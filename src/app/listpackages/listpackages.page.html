@@ -9,14 +9,14 @@
 
 <ion-content>
 
-      <ion-searchbar animated></ion-searchbar>
+      <ion-searchbar [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
 
       <div>
         <ion-list>
           <ion-item
             button
             (click)="testClick()"
-            *ngFor="let package of packageList">
+            *ngFor="let package of packageList  | filter:filterTerm">
             <ion-thumbnail slot="start">
               <img src="{{package.img}}" />
             </ion-thumbnail>

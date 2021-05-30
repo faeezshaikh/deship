@@ -8,10 +8,9 @@ declare let Moralis;
   styleUrls: ['./listpackages.page.scss'],
 })
 export class ListpackagesPage implements OnInit {
-  BigObject:any;
+  filterTerm: string;
 
   packageList: any[] = [];
-  // {  sender: string, senderAddr:string, senderPhone: string,senderEmail: string, receiverAddr: string,recieverPhone: string,recieverEmail: string,gems: number, miles: number, img: string,fragile:boolean,confirm:boolean,instructions:string, status:string}
 
   constructor() {
 
