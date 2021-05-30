@@ -3,6 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AddpackagePage } from './addpackage.page';
 
+
+
+
+
+
 const routes: Routes = [
   {
     path: '',

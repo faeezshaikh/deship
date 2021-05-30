@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
 
 import { IonicModule } from '@ionic/angular';
 
 import { AddpackagePageRoutingModule } from './addpackage-routing.module';
 
 import { AddpackagePage } from './addpackage.page';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AddpackagePageRoutingModule
+    AddpackagePageRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [AddpackagePage]
 })

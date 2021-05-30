@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-
+  <form [formGroup]='ionicForm' (ngSubmit)="submitForm()" novalidate>
 <ion-card>
   <ion-card-header>
     <ion-card-subtitle>Receiver Info</ion-card-subtitle>
@@ -20,20 +20,38 @@
   <ion-card-content>
 
     <ion-item>
-      <ion-label position="floating"> Address</ion-label>
-      <ion-input></ion-input>
+      <ion-label position="floating"> Address * </ion-label>
+      <ion-input formControlName="address" type="text"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.address.errors?.required">
+      Address is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.address.errors?.minlength">
+      Address should be min 5 chars long.
+    </span>
+
 
     <ion-item>
-      <ion-label position="floating"> Phone</ion-label>
-      <ion-input></ion-input>
+      <ion-label position="floating"> Phone *</ion-label>
+      <ion-input maxlength="10" formControlName="mobile" type="text" required></ion-input>
     </ion-item>
-
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.required">
+      Phone number is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.pattern">
+      Only numerical values allowed.
+    </span>
 
     <ion-item>
-      <ion-label position="floating"> Email</ion-label>
-      <ion-input></ion-input>
+      <ion-label position="floating"> Email *</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+      Email is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+      Please provide valid email id.
+    </span>
 
   </ion-card-content>
 </ion-card>
@@ -49,17 +67,17 @@
 
   <ion-item>
     <ion-label>Signature on delivery required?</ion-label>
-    <ion-toggle slot="end" ></ion-toggle>
+    <ion-toggle slot="end" formControlName="delivery" type="select"  [(ngModel)]="delivery"></ion-toggle>
   </ion-item>
 
   <ion-item>
-    <ion-checkbox slot="end" Fragile></ion-checkbox>
+    <ion-checkbox slot="end" Fragile formControlName="fragile" type="select" [(ngModel)]="fragile"></ion-checkbox>
     <ion-label>Check if fragile</ion-label>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Additional notes</ion-label>
-    <ion-textarea></ion-textarea>
+    <ion-textarea formControlName="instructions" type="text"></ion-textarea>
   </ion-item>
   <ion-card-content>
 </ion-card-content>
@@ -71,7 +89,7 @@
 
 
   <ion-card-header>
-    <ion-card-subtitle>Cost & Speed</ion-card-subtitle>
+    <ion-card-subtitle>Choose cost & speed</ion-card-subtitle>
 
   </ion-card-header>
   <ion-grid>
@@ -79,16 +97,18 @@
       <ion-col>
         <ion-card>
           <ion-item>
-          <ion-label color="dark">Days: {{gems}}</ion-label>
-        </ion-item>
+          <ion-label  color="dark">Cost: {{gems}} &nbsp; <ion-icon name="diamond-outline"></ion-icon></ion-label>
+          </ion-item>
+
         </ion-card>
       </ion-col>
       <ion-col>
+
+
         <ion-card>
           <ion-item>
-          <ion-label color="dark">Cost: {{gems * 10}} &nbsp; <ion-icon name="diamond-outline"></ion-icon></ion-label>
-          </ion-item>
-
+          <ion-label  color="dark"> Approximate days: {{days}}</ion-label>
+        </ion-item>
         </ion-card>
       </ion-col>
     </ion-row>
@@ -96,11 +116,18 @@
 
 
   <ion-item>
-    <ion-range min="20" max="80" step="2"  [(ngModel)]="gems">
+    <ion-range required min="1" max="20" step="1" [(ngModel)]="gems" formControlName="range" type="number" (ionChange)="rangeChanged()">
       <ion-icon size="small" slot="start" name="sunny"></ion-icon>
       <ion-icon slot="end" name="sunny"></ion-icon>
     </ion-range>
   </ion-item>
+  <!-- <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+    Days are required.
+  </span>
+  <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+    Please provide valid days.
+  </span> -->
+
   <ion-card-content>
 </ion-card-content>
 </ion-card>
@@ -110,11 +137,11 @@
   <ion-button shape="round" fill="outline" (click)="goback()">Cancel
     <ion-icon slot="start" name="close-outline"  id="submitButton" ></ion-icon>
   </ion-button>
-  <ion-button shape="round" (click)="login()" >
+  <ion-button shape="round" type="submit">
     Add
     <ion-icon slot="start" name="add-outline"  id="submitButton" ></ion-icon>
   </ion-button>
 </div>
 
-
+  </form>
 </ion-content>
