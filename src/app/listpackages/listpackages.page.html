@@ -9,9 +9,28 @@
 
 <ion-content>
 
-      <ion-searchbar [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
+  <div>
+<ion-item>
+  <ion-searchbar [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
+&nbsp;	<span style="color:#969bb5;">({{ packageList.length}})</span>
+</ion-item>
 
-      <div>
+  </div>
+      <ion-grid *ngIf="isLoading">
+        <ion-row>
+          <ion-col>&nbsp;</ion-col>
+          <ion-col>
+            <div style="text-align: center">
+
+              <ion-spinner   name="circles" color="primary"></ion-spinner>
+            </div>
+          </ion-col>
+          <ion-col>&nbsp;</ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+      <div *ngIf="!isLoading">
         <ion-list>
           <ion-item
             button
@@ -46,6 +65,10 @@
 
 
 
-
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="gotoaddpage()">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
 
 </ion-content>

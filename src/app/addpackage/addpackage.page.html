@@ -1,0 +1,120 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">&nbsp;
+      <ion-button (click)="goback()">
+        <ion-icon  name="chevron-back-outline"></ion-icon>
+      </ion-button>
+
+    </ion-buttons>
+    <ion-title>Add Package</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Receiver Info</ion-card-subtitle>
+
+  </ion-card-header>
+
+  <ion-card-content>
+
+    <ion-item>
+      <ion-label position="floating"> Address</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"> Phone</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label position="floating"> Email</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+  </ion-card-content>
+</ion-card>
+
+
+<ion-card>
+
+
+  <ion-card-header>
+    <ion-card-subtitle>Instructions</ion-card-subtitle>
+
+  </ion-card-header>
+
+  <ion-item>
+    <ion-label>Signature on delivery required?</ion-label>
+    <ion-toggle slot="end" ></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-checkbox slot="end" Fragile></ion-checkbox>
+    <ion-label>Check if fragile</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Additional notes</ion-label>
+    <ion-textarea></ion-textarea>
+  </ion-item>
+  <ion-card-content>
+</ion-card-content>
+</ion-card>
+
+
+
+<ion-card>
+
+
+  <ion-card-header>
+    <ion-card-subtitle>Cost & Speed</ion-card-subtitle>
+
+  </ion-card-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-item>
+          <ion-label color="dark">Days: {{gems}}</ion-label>
+        </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card>
+          <ion-item>
+          <ion-label color="dark">Cost: {{gems * 10}} &nbsp; <ion-icon name="diamond-outline"></ion-icon></ion-label>
+          </ion-item>
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-item>
+    <ion-range min="20" max="80" step="2"  [(ngModel)]="gems">
+      <ion-icon size="small" slot="start" name="sunny"></ion-icon>
+      <ion-icon slot="end" name="sunny"></ion-icon>
+    </ion-range>
+  </ion-item>
+  <ion-card-content>
+</ion-card-content>
+</ion-card>
+
+<div style="text-align: center">
+
+  <ion-button shape="round" fill="outline" (click)="goback()">Cancel
+    <ion-icon slot="start" name="close-outline"  id="submitButton" ></ion-icon>
+  </ion-button>
+  <ion-button shape="round" (click)="login()" >
+    Add
+    <ion-icon slot="start" name="add-outline"  id="submitButton" ></ion-icon>
+  </ion-button>
+</div>
+
+
+</ion-content>

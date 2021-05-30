@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 declare let Moralis;
 
 @Component({
@@ -12,14 +13,18 @@ export class ListpackagesPage implements OnInit {
 
   packageList: any[] = [];
 
-  constructor() {
+  isLoading = false;
+
+  constructor(private router : Router) {
 
     this.retrieveList();
    }
 
   ngOnInit() {
   }
-
+  gotoaddpage() {
+    this.router.navigateByUrl('/addpackage');
+  }
 
   save2(){
 
@@ -71,11 +76,12 @@ export class ListpackagesPage implements OnInit {
 
   async retrieveList() {
 
-
+    this.isLoading = true;
     const query = new Moralis.Query('Package');
 
 
     const results = await query.find();
+    this.isLoading = false;
     console.log('Successfully retrieved ' + results.length + ' packages.');
 
     for (let i = 0; i < results.length; i++) {
