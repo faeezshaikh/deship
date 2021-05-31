@@ -134,22 +134,6 @@ export class ListpackagesPage implements OnInit {
   }
 
 
-  getItemFromList(id) {
-
-    const query = new Moralis.Query('Package');
-    query.get(id).then((pkg) => {
-      // The object was retrieved successfully.
-      // console.log('Package details:' ,pkg);
-      console.log('Package details:' ,pkg.get('senderEmail'));
-      console.log('Package details:' ,pkg.get('senderAddr'));
-      console.log('Package details:' ,pkg.get('receiverAddr'));
-
-    }, (error) => {
-      console.log('Error getting Package details:' ,error);
-      // The object was not retrieved successfully.
-      // error is a Moralis.Error with an error code and message.
-    });
-  }
 
   async presentAlertConfirm(msg) {
     const alert = await this.alertController.create({

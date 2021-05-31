@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, resolveForwardRef } from '@angular/core';
 
 declare let Moralis;
 
@@ -65,6 +65,37 @@ export class MoralisService {
     });
 
 
+  }
+
+
+  async getItemFromList(id) {
+
+    const query = new Moralis.Query('Package');
+    const resp = await query.get(id);
+    return {    senderEmail: resp.get('senderEmail'),
+                senderAddr : resp.get('senderAddr'),
+                receiverAddr : resp.get('receiverAddr'),
+                delivery : resp.get('confirm'),
+                img: resp.get('img'),
+                gems: resp.get('gems'),
+              instructions: resp.get('instructions'),
+              fragile:resp.get('fragile'),
+              status: resp.get('status'),
+              sender: resp.get('sender'),
+              receiverPhone: resp.get('receiverPhone'),
+              senderPhone: resp.get('senderPhone'),
+              miles: resp.get('miles')
+            };
+    // query.get(id).then((pkg) => {
+
+    //   console.log('Package details:' ,pkg.get('senderEmail'));
+    //   console.log('Package details:' ,pkg.get('senderAddr'));
+    //   console.log('Package details:' ,pkg.get('receiverAddr'));
+
+    // }, (error) => {
+    //   console.log('Error getting Package details:' ,error);
+
+    // });
   }
 
   async walletConnect2(){
