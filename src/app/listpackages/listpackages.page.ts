@@ -36,7 +36,7 @@ export class ListpackagesPage implements OnInit {
 
    slideOpts = {
     initialSlide: 0,
-    speed: 1000
+    speed: 500
   };
 
   swipeNext(){
