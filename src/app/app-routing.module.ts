@@ -23,8 +23,8 @@ const routes: Routes = [
     canLoad: [AuthGuard]
   },
   {
-    path: 'news/:id',
-    loadChildren: () => import('./news/news.module').then( m => m.NewsPageModule),
+    path: 'packagedetails/:id',
+    loadChildren: () => import('./packagedetails/packagedetails.module').then( m => m.PackagedetailsPageModule),
     canLoad: [AuthGuard]
   },
   {
@@ -43,6 +43,10 @@ const routes: Routes = [
   {
     path: 'balances',
     loadChildren: () => import('./balances/balances.module').then( m => m.BalancesPageModule)
+  },
+  {
+    path: 'packagedetails',
+    loadChildren: () => import('./packagedetails/packagedetails.module').then( m => m.PackagedetailsPageModule)
   }
 ];
 

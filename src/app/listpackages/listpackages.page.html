@@ -172,7 +172,7 @@
         <ion-list>
           <ion-item
             button
-            (click)="testClick()"
+            (click)="opendetails(package.id)"
             *ngFor="let package of packageList  | filter:filterTerm">
             <ion-thumbnail slot="start">
               <img src="{{package.img}}" />
@@ -183,7 +183,7 @@
               <p>Pickup: {{package.senderAddr}} &nbsp;<i class="navigate-outline"></i>&nbsp;{{package.miles}} miles away</p>
               <p>Icon on right</p>
             </ion-label>
-            <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+            <ion-icon (click)="opendetails(package.id)" name="chevron-forward-outline" slot="end"></ion-icon>
           </ion-item>
         </ion-list>
 

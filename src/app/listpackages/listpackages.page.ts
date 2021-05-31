@@ -192,4 +192,9 @@ export class ListpackagesPage implements OnInit {
     console.log('onDidDismiss resolved with role', role);
   }
 
+  opendetails(objectId){
+    console.log(objectId);
+    this.router.navigateByUrl('/packagedetails/'+objectId);
+  }
+
 }
