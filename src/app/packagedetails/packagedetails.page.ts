@@ -22,16 +22,12 @@ export class PackagedetailsPage implements OnInit {
       that.pkgdetails = resp;
      });
 
-     this.img = this.getImg();
-     console.log('Image: ',this.img);
+
 
 
 
   }
 
-  async getImg() {
-    return await this.moralisService.getImg('url');
-  }
 
   goback() {
     this.router.navigateByUrl('/listpackages');

@@ -13,28 +13,35 @@
 <ion-content >
 
 
-    <ion-card>
-      <ion-card-header>
-        <ion-card-subtitle>Photo</ion-card-subtitle>
-
-      </ion-card-header>
-
-      <ion-card-content>
-
-        <!-- <ion-grid>
-          <ion-row>
-            <ion-col
-              size="6"
-              *ngFor="let photo of photoService.photos; index as position"
-            >
-              <ion-img [src]="photo.webviewPath"></ion-img>
-            </ion-col>
-          </ion-row>
-        </ion-grid> -->
 
 
-      </ion-card-content>
-    </ion-card>
+      <ion-card>
+
+
+
+        <ion-item>
+
+
+            <img  src="{{pkgdetails.img}}"/>
+
+
+
+
+
+        </ion-item>
+        <ion-card-header>
+          <ion-card-subtitle>Destination</ion-card-subtitle>
+          <ion-card-title>{{pkgdetails.receiverAddr}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          This is content, without any paragraph or header tags,
+
+        </ion-card-content>
+      </ion-card>
+
+
+
 
     <ion-card>
       <ion-card-header>
