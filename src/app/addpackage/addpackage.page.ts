@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MoralisService } from '../services/moralis.service';
 import { UtilService } from '../services/util.service';
 import { AlertController } from '@ionic/angular';
+import { PhotoService } from '../services/photo.service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class AddpackagePage implements OnInit {
   constructor(private router: Router,public formBuilder: FormBuilder,
           private utilService: UtilService,
           private moralisService:MoralisService,
-          public alertController: AlertController) { }
+          public alertController: AlertController,
+          public photoService: PhotoService) { }
 
   ngOnInit() {
 
@@ -122,5 +124,9 @@ export class AddpackagePage implements OnInit {
                                     this.ionicForm.value.delivery,'Open');
     this.utilService.presentToast('Package has been successfully added.');
     this.goback();
+  }
+
+  takePhoto() {
+    this.photoService.addNewToGallery();
   }
 }

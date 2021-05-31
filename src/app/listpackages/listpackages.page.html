@@ -10,20 +10,148 @@
     </ion-buttons>
 
     <ion-buttons *ngIf="ethAddress!=='none'" slot="secondary">
-
       <ion-button ion-button block large  style= "border-radius: 30px; background-color:rgb(239, 244, 245);color:#427feb; font-size:15px"(click)="walletDisconnect()">&nbsp;{{ethAddressDisplay }}</ion-button>&nbsp;&nbsp;&nbsp;
       <ion-button ion-button outline   (click)="presentPopover($event)">&nbsp;<i class="fas fa-balance-scale fa-2x"></i></ion-button>&nbsp;&nbsp;&nbsp;
+
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-item>
+    <ion-searchbar [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
+  &nbsp;	<span style="color:#969bb5;">({{ packageList.length}})</span>
+  </ion-item>
+  <div style="text-align: center;">
+    <small>Featured Packages</small>
+  </div>
+  <p></p>
+
+
+  <button (click)="swipePrev()" class="backBtn">
+
+    <i (click)="swipePrev()"  class="fas fa-caret-left fa-2x"></i>
+  </button>
+
+  <button  (click)="swipeNext()" class="nextBtn">
+    <i (click)="swipeNext()" class="fas fa-caret-right fa-2x"></i>
+ </button>
+
+
+  <ion-slides pager="true" [options]="slideOpts" #mySlider>
+    <ion-slide>
+      <ion-card>
+
+
+
+        <ion-item>
+          <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+          <ion-thumbnail slot="start">
+            <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51-cROxgwLTs6Qn2FT-t6W7UogsXn6YDXpi6V7e79AnJSiS89GkS4UpcwBKuzOhdXNF0&usqp=CAU" />
+          </ion-thumbnail>
+          <!-- <ion-label>ion-item in a card, icon left, button right</ion-label> -->
+        ion-item in a card, icon left, button right
+
+
+          <ion-button fill="outline" slot="end">View</ion-button>
+        </ion-item>
+        <ion-card-header>
+          <ion-card-subtitle>Destination</ion-card-subtitle>
+          <ion-card-title>Madison, WI</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          This is content, without any paragraph or header tags,
+
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card>
+
+
+
+        <ion-item>
+          <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+          <ion-thumbnail slot="start">
+            <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBGtzkvAO7gaElHV2fiVoluntYc2bh4Np0Kg&usqp=CAU" />
+          </ion-thumbnail>
+          <!-- <ion-label>ion-item in a card, icon left, button right</ion-label> -->
+        ion-item in a card, icon left, button right
+
+
+          <ion-button fill="outline" slot="end">View</ion-button>
+        </ion-item>
+        <ion-card-header>
+          <ion-card-subtitle>Destination</ion-card-subtitle>
+          <ion-card-title>Madison, WI</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          This is content, without any paragraph or header tags,
+
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+
+      <ion-card>
+
+
+
+        <ion-item>
+          <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+          <ion-thumbnail slot="start">
+            <img  src="https://norpakke.no/wp-content/uploads/2020/07/packages.jpg" />
+          </ion-thumbnail>
+          <!-- <ion-label>ion-item in a card, icon left, button right</ion-label> -->
+        ion-item in a card, icon left, button right
+
+
+          <ion-button fill="outline" slot="end">View</ion-button>
+        </ion-item>
+        <ion-card-header>
+          <ion-card-subtitle>Destination</ion-card-subtitle>
+          <ion-card-title>Madison, WI</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          This is content, without any paragraph or header tags,
+
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card>
+
+
+
+        <ion-item>
+          <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+          <ion-thumbnail slot="start">
+            <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaG0JBD2eVzdQczxYR1pSyH6hSWWCX-zg58BszvP8l-uUo8bOP2-UX2VHO8EmoxVLw4XA&usqp=CAU" />
+          </ion-thumbnail>
+          <!-- <ion-label>ion-item in a card, icon left, button right</ion-label> -->
+        ion-item in a card, icon left, button right
+
+
+          <ion-button fill="outline" slot="end">View</ion-button>
+        </ion-item>
+        <ion-card-header>
+          <ion-card-subtitle>Destination</ion-card-subtitle>
+          <ion-card-title>Madison, WI</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          This is content, without any paragraph or header tags,
+
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
   <div>
-<ion-item>
-  <ion-searchbar [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
-&nbsp;	<span style="color:#969bb5;">({{ packageList.length}})</span>
-</ion-item>
+
 
   </div>
       <ion-grid *ngIf="isLoading">

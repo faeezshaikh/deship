@@ -1,9 +1,13 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController ,PopoverController } from '@ionic/angular';
+import { AlertController ,IonSlides,PopoverController } from '@ionic/angular';
 import { BalancesPage } from '../balances/balances.page';
 import { MoralisService } from '../services/moralis.service';
+import { ViewChild } from '@angular/core';
+
+
+
 declare let Moralis;
 
 @Component({
@@ -17,6 +21,8 @@ export class ListpackagesPage implements OnInit {
   ethAddress:any = 'none';
   ethAddressDisplay:any = 'none';
 
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @ViewChild('mySlider', { static: true }) slides: IonSlides;
   packageList: any[] = [];
 
   isLoading = false;
@@ -28,28 +34,55 @@ export class ListpackagesPage implements OnInit {
     console.log(' Inside constructor');
    }
 
+   slideOpts = {
+    initialSlide: 0,
+    speed: 1000
+  };
+
+  swipeNext(){
+    console.log('next');
+
+    this.slides.slideNext();
+  }
+
+  swipePrev() {
+    console.log('prev');
+    this.slides.slidePrev();
+
+  }
+
+
    ionViewWillEnter() {
 
      this.retrieveList2();
      console.log(' Inside ionViewWillEnter');
 
 
-     const ethAddress = localStorage.getItem('ethAddr');
-     if(ethAddress) {
-       this.ethAddress = ethAddress;
-     }
-
-     const ethAddressDisp = localStorage.getItem('ethAddrDisp');
-     if(ethAddressDisp) {
-       this.ethAddressDisplay = ethAddressDisp;
-     }
+     this.getWalletStatus();
 
 
 
     }
 
+  private getWalletStatus() {
+    const ethAddress = localStorage.getItem('ethAddr');
+    if (ethAddress) {
+      this.ethAddress = ethAddress;
+    } else {
+      this.ethAddress = 'none';
+    }
+
+    const ethAddressDisp = localStorage.getItem('ethAddrDisp');
+    if (ethAddressDisp) {
+      this.ethAddressDisplay = ethAddressDisp;
+    } else {
+      this.ethAddressDisplay = 'none';
+    }
+  }
+
     ngOnInit() {
       console.log(' Inside ngOnInit');
+      this.getWalletStatus();
   }
   gotoaddpage() {
     this.router.navigateByUrl('/addpackage');
@@ -158,4 +191,5 @@ export class ListpackagesPage implements OnInit {
     const { role } = await popover.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
   }
+
 }

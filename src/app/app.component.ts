@@ -25,6 +25,7 @@ export class AppComponent {
   logout() {
     localStorage.removeItem('authenticated');
     localStorage.removeItem('ethAddr');
+    localStorage.removeItem('ethAddrDisp');
     this.menu.enable(false);
     this.router.navigateByUrl('/');
 
