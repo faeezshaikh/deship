@@ -32,7 +32,9 @@ export class AddpackagePage implements OnInit {
 
     this.ionicForm = this.formBuilder.group({
       address: ['', [Validators.required, Validators.minLength(5)]],
+      pickupaddress: ['', [Validators.required, Validators.minLength(5)]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      senderemail: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       range: ['', [Validators.min(1)]],
       instructions: ['', [Validators.nullValidator]],
@@ -114,16 +116,17 @@ export class AddpackagePage implements OnInit {
 
   addConfirmed(){
     this.isSubmitted = false;
-    this.ionicForm.reset();
+
     this.gems = 1;
     this.days = 15;
-    this.moralisService.addToList('sender','112 ridge dr','345-345-34535','asbc@gal.com',
+    this.moralisService.addToList('John Doe',this.ionicForm.value.pickupaddress,'345-345-34535',this.ionicForm.value.senderemail,
                                   this.ionicForm.value.address,this.ionicForm.value.mobile,
                                     this.ionicForm.value.email,this.ionicForm.value.range,34,this.photoService.photos[0].ipfs,
                                     this.ionicForm.value.fragile,this.ionicForm.value.instructions,
                                     this.ionicForm.value.delivery,'Open',
                                     );
     this.utilService.presentToast('Package has been successfully added.');
+    this.ionicForm.reset();
     this.goback();
   }
 

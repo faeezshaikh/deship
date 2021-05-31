@@ -20,6 +20,8 @@ export class PackagedetailsPage implements OnInit {
     const that = this;
     this.getDetails(objId).then(function(resp) {
       that.pkgdetails = resp;
+      console.log(that.pkgdetails);
+
      });
 
 

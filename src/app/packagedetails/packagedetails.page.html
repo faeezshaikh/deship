@@ -32,10 +32,21 @@
         <ion-card-header>
           <ion-card-subtitle>Destination</ion-card-subtitle>
           <ion-card-title>{{pkgdetails.receiverAddr}}</ion-card-title>
+
         </ion-card-header>
 
-        <ion-card-content>
-          This is content, without any paragraph or header tags,
+ <ion-card-content>
+
+  <ion-row>
+    <ion-col>
+      <ion-button fill="outline">Pickup</ion-button>
+    </ion-col>
+    <ion-col>
+      <span style="color: tomato;">
+      <i class="fas fa-map-marked-alt fa-2x"></i> </span> &nbsp;50 miles
+    </ion-col>
+
+  </ion-row>
 
         </ion-card-content>
       </ion-card>
@@ -94,8 +105,8 @@
 
 
     <ion-item>
-      <ion-label position="floating"> Email *</ion-label>
-      <ion-input  type="email"></ion-input>
+      <ion-label > Email *</ion-label>
+      <ion-label> {{pkgdetails.receiverEmail}} </ion-label>
     </ion-item>
 
 
@@ -113,17 +124,17 @@
 
   <ion-item>
     <ion-label>Signature on delivery required?</ion-label>
-    <ion-toggle slot="end"  type="select" ></ion-toggle>
+    <ion-label> {{pkgdetails.delivery ? 'Yes' : 'No'}} </ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-checkbox slot="end" Fragile  type="select" ></ion-checkbox>
-    <ion-label>Check if fragile</ion-label>
+    <ion-label>Is Package fragile?</ion-label>
+    <ion-label> {{pkgdetails.fragile ? 'Yes' : 'No'}} </ion-label>
   </ion-item>
 
   <ion-item>
-    <ion-label position="floating">Additional notes</ion-label>
-    <ion-textarea  type="text"></ion-textarea>
+    <ion-label >Additional notes</ion-label>
+    <ion-label> {{pkgdetails.instructions}} </ion-label>
   </ion-item>
   <ion-card-content>
 </ion-card-content>
@@ -138,31 +149,11 @@
     <ion-card-subtitle>Choose cost & speed</ion-card-subtitle>
 
   </ion-card-header>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-card>
-          <ion-item>
-          <ion-label  color="dark">Cost: {{gems}} &nbsp; <ion-icon name="diamond-outline"></ion-icon></ion-label>
-          </ion-item>
 
-        </ion-card>
-      </ion-col>
-      <ion-col>
-
-
-        <ion-card>
-          <ion-item>
-          <ion-label  color="dark"> Approximate days: {{days}}</ion-label>
-        </ion-item>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-
-
-
+  <ion-item>
+    <ion-label>Delivery Payout:</ion-label>
+    <ion-label> {{pkgdetails.gems}} <ion-icon name="diamond-outline"></ion-icon></ion-label>
+  </ion-item>
 
   <ion-card-content>
 </ion-card-content>
@@ -173,9 +164,9 @@
   <ion-button shape="round" fill="outline" (click)="goback()">Cancel
     <ion-icon slot="start" name="close-outline"  id="submitButton" ></ion-icon>
   </ion-button>
-  <ion-button shape="round" type="submit">
-    Add
-    <ion-icon slot="start" name="add-outline"  id="submitButton" ></ion-icon>
+  <ion-button *ngIf="pkgdetails.status === 'Open'" shape="round" >
+    <i class="far fa-check-circle"></i> &nbsp;   Pickup
+
   </ion-button>
 </div>
 
