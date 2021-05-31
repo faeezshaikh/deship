@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Camera, CameraResultType, CameraSource, CameraPhoto } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem';
+import { MoralisService } from './moralis.service';
 // import { Storage } from @capacitor/storage;
 
 @Injectable({
@@ -11,7 +12,7 @@ export class PhotoService {
 
   public photos: Photo[] = [];
 
-  constructor() { }
+  constructor(private moralisService : MoralisService) { }
 
   public async addNewToGallery() {
     // Take a photo
@@ -29,6 +30,11 @@ export class PhotoService {
     // Save the picture and add it to photo collection
     const savedImageFile = await this.savePicture(capturedPhoto);
     this.photos.unshift(savedImageFile);
+
+    console.log('Final response:' ,savedImageFile);
+
+
+
   }
 
   private async savePicture(cameraPhoto: CameraPhoto) {
@@ -43,11 +49,21 @@ export class PhotoService {
       directory: Directory.Data
     });
 
+    const resp = await this.moralisService.saveImage(cameraPhoto.webPath,fileName,base64Data);
+    console.log('Resonse from moralis save ipfs hash',resp.hash);
+    console.log('Resonse from moralis save ipfs: ',resp.ipfs);
+    console.log('Resonse from moralis save moralis url : ',resp.moralisurl);
+
+
+
     // Use webPath to display the new image instead of base64 since it's
     // already loaded into memory
     return {
       filepath: fileName,
-      webviewPath: cameraPhoto.webPath
+      webviewPath: cameraPhoto.webPath,
+      ipfs:resp.ipfs,
+      hash:resp.hash,
+      moralisImgUrl:resp.moralisurl
     };
   }
 
@@ -73,4 +89,7 @@ export class PhotoService {
 export interface Photo {
   filepath: string;
   webviewPath: string;
+  ipfs: string;
+  hash: string;
+  moralisImgUrl:string
 }

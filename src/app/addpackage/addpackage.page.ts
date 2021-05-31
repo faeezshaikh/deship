@@ -119,9 +119,10 @@ export class AddpackagePage implements OnInit {
     this.days = 15;
     this.moralisService.addToList('sender','112 ridge dr','345-345-34535','asbc@gal.com',
                                   this.ionicForm.value.address,this.ionicForm.value.mobile,
-                                    this.ionicForm.value.email,this.ionicForm.value.range,34,'',
+                                    this.ionicForm.value.email,this.ionicForm.value.range,34,this.photoService.photos[0].ipfs,
                                     this.ionicForm.value.fragile,this.ionicForm.value.instructions,
-                                    this.ionicForm.value.delivery,'Open');
+                                    this.ionicForm.value.delivery,'Open',
+                                    );
     this.utilService.presentToast('Package has been successfully added.');
     this.goback();
   }

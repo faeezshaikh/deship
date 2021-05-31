@@ -18,11 +18,25 @@
 </ion-header>
 
 <ion-content>
-
   <ion-item>
     <ion-searchbar [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
   &nbsp;	<span style="color:#969bb5;">({{ packageList.length}})</span>
   </ion-item>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+
+
+
+
 
       <ion-grid *ngIf="isLoading">
         <ion-row>

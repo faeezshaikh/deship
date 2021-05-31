@@ -9,6 +9,7 @@ import { MoralisService } from '../services/moralis.service';
 })
 export class PackagedetailsPage implements OnInit {
   pkgdetails:any = {};
+  img:any;
 
   constructor(private activatedRoute: ActivatedRoute,private router: Router,
     private moralisService : MoralisService) { }
@@ -21,7 +22,15 @@ export class PackagedetailsPage implements OnInit {
       that.pkgdetails = resp;
      });
 
+     this.img = this.getImg();
+     console.log('Image: ',this.img);
 
+
+
+  }
+
+  async getImg() {
+    return await this.moralisService.getImg('url');
   }
 
   goback() {

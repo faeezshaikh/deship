@@ -39,6 +39,10 @@ export class MoralisService {
     return this.packageList;
   }
 
+  async getImg(url){
+    return await Moralis.Cloud.httpRequest({ url: 'https://ipfs.moralis.io:2053/ipfs/QmRW6VaaMQ3bK7W2QDRLqj1ivP7knHejPf72r2fQVVxXKP' });
+  }
+
   addToList(sender,senderAddr,senderPhone,senderEmail,receiverAddr,receiverPhone,receiverEmail,gems,miles,img,fragile
     ,instructions,delivery,status) {
     const Package = Moralis.Object.extend('Package');
@@ -67,6 +71,22 @@ export class MoralisService {
 
   }
 
+
+  async saveImage(webviewPath,filename,base64Data) {
+    // const image = "data:image/png;base64,iVBORw0KGgoAAA...."
+    const image = webviewPath;
+    const file = new Moralis.File(filename, { base64: base64Data });
+    const savedIpfs = await file.saveIPFS();
+    // console.log('IPFS name and hash',file.ipfs() + ' ' + file.hash());
+
+    const moralisUpload = await file.save();
+    // console.log('moralis upload', file.url());
+
+    return {'ipfs':file.ipfs(), 'hash':file.hash(),'moralisurl':file.url()};
+
+
+
+  }
 
   async getItemFromList(id) {
 

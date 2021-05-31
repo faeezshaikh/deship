@@ -181,4 +181,14 @@ export class ListpackagesPage implements OnInit {
     this.router.navigateByUrl('/packagedetails/'+objectId);
   }
 
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.retrieveList2();
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
 }
