@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
+import { MoralisService } from '../services/moralis.service';
 
 declare let Moralis;
 
@@ -17,7 +18,8 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private menu: MenuController,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private moralisService: MoralisService
   ) {}
 
   ngOnInit() {
@@ -45,6 +47,15 @@ export class LoginPage implements OnInit {
       const user = await Moralis.User.logIn(this.username, this.password);
       console.log('logged in user:', user);
       localStorage.setItem('authenticated', 'yes');
+      localStorage.setItem('username', this.username);
+
+      const resp = await this.moralisService.getCurrentUser();
+      localStorage.setItem('emailId', resp.email);
+
+
+
+
+      localStorage.setItem('email', 'yes');
 
       this.menu.enable(true);
       this.router.navigateByUrl('/listpackages');

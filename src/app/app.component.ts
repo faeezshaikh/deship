@@ -28,9 +28,9 @@ export class AppComponent {
   }
 
   async getCurrentUser() {
-    const resp = await this.moralisService.getCurrentUser();
-    this.username = resp.username;
-    this.email = resp.email;
+    // const resp = await this.moralisService.getCurrentUser();
+    this.username = localStorage.getItem('username');
+    this.email = localStorage.getItem('emailId');
   }
 
   logout() {
