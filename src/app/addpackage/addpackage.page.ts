@@ -18,6 +18,7 @@ export class AddpackagePage implements OnInit {
   days = 15;
   ionicForm: FormGroup;
   isSubmitted = false;
+  email:any;
 
   delivery = false;
   fragile = false;
@@ -43,6 +44,8 @@ export class AddpackagePage implements OnInit {
     });
 
     console.log('User: ',this.moralisService.getCurrentUser());
+
+      this.getCurrentUser();
   }
 
   goback() {
@@ -125,11 +128,19 @@ export class AddpackagePage implements OnInit {
                                   this.ionicForm.value.address,this.ionicForm.value.mobile,
                                     this.ionicForm.value.email,this.ionicForm.value.range,34,this.photoService.photos[0].ipfs,
                                     this.ionicForm.value.fragile,this.ionicForm.value.instructions,
-                                    this.ionicForm.value.delivery,'Ready',
+                                    this.ionicForm.value.delivery,'Ready',this.email
                                     );
     this.utilService.presentToast('Package has been successfully added.');
     this.ionicForm.reset();
     this.goback();
+  }
+
+
+  async getCurrentUser() {
+    const resp = await this.moralisService.getCurrentUser();
+    this.email = resp.email;
+    console.log(this.email);
+
   }
 
   takePhoto() {

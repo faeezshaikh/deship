@@ -44,7 +44,7 @@ export class MoralisService {
   }
 
   addToList(sender,senderAddr,senderPhone,senderEmail,receiverAddr,receiverPhone,receiverEmail,gems,miles,img,fragile
-    ,instructions,delivery,status) {
+    ,instructions,delivery,status,creator) {
     const Package = Moralis.Object.extend('Package');
 
     const pkg = new Package();
@@ -62,6 +62,7 @@ export class MoralisService {
     pkg.set('instructions', instructions);
     pkg.set('confirm', delivery);
     pkg.set('status', status);
+    pkg.set('creator', creator);
 
 
     pkg.save().then((savedObject) => {
