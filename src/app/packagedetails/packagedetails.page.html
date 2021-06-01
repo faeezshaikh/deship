@@ -170,9 +170,8 @@
   <ion-button shape="round" fill="outline" (click)="goback()">Cancel
     <ion-icon slot="start" name="close-outline"  id="submitButton" ></ion-icon>
   </ion-button>
-  <ion-button *ngIf="pkgdetails.status === 'Ready'" shape="round" >
+  <ion-button *ngIf="pkgdetails.status === 'Ready'" shape="round" (click)='presentAlertConfirm(pkgdetails)'>
     <i class="far fa-check-circle"></i> &nbsp;   Pickup
-
   </ion-button>
 </div>
 

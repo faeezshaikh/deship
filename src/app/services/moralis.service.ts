@@ -104,6 +104,26 @@ export class MoralisService {
 
   }
 
+   async updateItem(img,email) {
+    const query = new Moralis.Query('Package');
+    // console.log(id);
+
+    query.equalTo('img', img);
+    const results = await query.find();
+
+    const pkg = results[0];
+
+
+    pkg.set('status', 'In Transit');
+    pkg.set('mover',email);
+
+    pkg.save().then((resp) => {
+      console.log('Update successful');
+
+      });
+  }
+
+
   async getItemFromList(id) {
 
     const query = new Moralis.Query('Package');

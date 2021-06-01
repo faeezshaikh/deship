@@ -1,5 +1,7 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
 import { MoralisService } from '../services/moralis.service';
 
 @Component({
@@ -10,9 +12,11 @@ import { MoralisService } from '../services/moralis.service';
 export class PackagedetailsPage implements OnInit {
   pkgdetails:any = {};
   img:any;
+  email:any;
 
   constructor(private activatedRoute: ActivatedRoute,private router: Router,
-    private moralisService : MoralisService) { }
+    private moralisService : MoralisService, private alertController: AlertController,
+    private toastController : ToastController) { }
 
   ngOnInit() {
     const objId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -24,9 +28,18 @@ export class PackagedetailsPage implements OnInit {
 
      });
 
+     this.getCurrentUser();
 
 
 
+
+
+  }
+
+  async getCurrentUser() {
+    const resp = await this.moralisService.getCurrentUser();
+    this.email = resp.email;
+    console.log(this.email);
 
   }
 
@@ -37,6 +50,50 @@ export class PackagedetailsPage implements OnInit {
 
   async getDetails(objId) {
      return await this.moralisService.getItemFromList(objId);
+  }
+
+  pickup(img) {
+    this.moralisService.updateItem(img,this.email);
+    this.router.navigateByUrl('/listpackages');
+    this.presentToast('Order updated successfully.');
+  }
+
+
+  async presentToast(msg) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
+  }
+
+
+  async presentAlertConfirm(obj) {
+    console.log(obj);
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm.',
+      message: 'Are you sure you want to pick this package?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+              this.pickup(obj.img);
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }
