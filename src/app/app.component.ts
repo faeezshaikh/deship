@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { EventsService } from './services/events.service';
 import { MoralisService } from './services/moralis.service';
 @Component({
   selector: 'app-root',
@@ -21,12 +22,23 @@ export class AppComponent {
     { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor(private menu:MenuController,private router: Router,private moralisService: MoralisService) {
+  constructor(private menu:MenuController,private router: Router,
+    private eventsService : EventsService,
+    private moralisService: MoralisService) {
     this.getCurrentUser();
-
+    this.foo();
 
   }
 
+
+  foo() {
+    this.eventsService.getObservable().subscribe((data) => {
+      console.log('Data received:', data);
+      this.username = data.username;
+      this.email = data.email;
+
+    });
+  }
   async getCurrentUser() {
     // const resp = await this.moralisService.getCurrentUser();
     this.username = localStorage.getItem('username');
@@ -43,7 +55,7 @@ export class AppComponent {
   }
 
   ionViewWillEnter() {
-
+    this.foo();
   }
 
 
