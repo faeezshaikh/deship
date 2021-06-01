@@ -67,20 +67,14 @@
               <p>Pickup: {{package.senderAddr}} &nbsp;<i class="navigate-outline"></i>&nbsp;{{package.miles}} miles away</p>
               <p>Icon on right</p>
             </ion-label>
+            <ion-badge *ngIf="package.status === 'In Transit'" slot="end" color="warning">In Transit</ion-badge>
+            <ion-badge *ngIf="package.status === 'Delivered'" slot="end" color="success">Delivered</ion-badge>
             <ion-icon (click)="opendetails(package.id)" name="chevron-forward-outline" slot="end"></ion-icon>
           </ion-item>
         </ion-list>
 
 
-        <ion-button
-          expand="block"
-          (click)="removeFromList('VabvPWKvWGkufWHrIVeBszAS')"
-          >Remove</ion-button>
-        <ion-button
-          expand="block"
-          (click)="getItemFromList('VabvPWKvWGkufWHrIVeBszAS')"
-          >Get Item Details</ion-button
-        >
+
       </div>
 
 

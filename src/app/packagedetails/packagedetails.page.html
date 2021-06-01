@@ -37,13 +37,19 @@
 
  <ion-card-content>
 
-  <ion-row>
+  <ion-row *ngIf="pkgdetails.status ==='Ready'">
     <ion-col>
-      <ion-button fill="outline">Pickup</ion-button>
+      <ion-button fill="outline"> <i class="far fa-check-circle"></i> &nbsp;Pickup</ion-button>
     </ion-col>
     <ion-col>
-      <span style="color: tomato;">
-      <i class="fas fa-map-marked-alt fa-2x"></i> </span> &nbsp;50 miles
+
+        <span style="color: tomato;">
+          <i class="fas fa-map-marked-alt fa-2x"></i> </span> &nbsp;50 miles
+
+
+
+
+
     </ion-col>
 
   </ion-row>
@@ -56,7 +62,7 @@
 
     <ion-card>
       <ion-card-header>
-        <ion-card-subtitle>Sender Info</ion-card-subtitle>
+        <ion-card-subtitle>Pickup Location</ion-card-subtitle>
 
       </ion-card-header>
 
@@ -85,7 +91,7 @@
     </ion-card>
 <ion-card>
   <ion-card-header>
-    <ion-card-subtitle>Receiver Info</ion-card-subtitle>
+    <ion-card-subtitle>Drop off info</ion-card-subtitle>
 
   </ion-card-header>
 
@@ -164,7 +170,7 @@
   <ion-button shape="round" fill="outline" (click)="goback()">Cancel
     <ion-icon slot="start" name="close-outline"  id="submitButton" ></ion-icon>
   </ion-button>
-  <ion-button *ngIf="pkgdetails.status === 'Open'" shape="round" >
+  <ion-button *ngIf="pkgdetails.status === 'Ready'" shape="round" >
     <i class="far fa-check-circle"></i> &nbsp;   Pickup
 
   </ion-button>
