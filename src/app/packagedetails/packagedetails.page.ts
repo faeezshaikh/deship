@@ -2,6 +2,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
+import { EventsService } from '../services/events.service';
 import { MoralisService } from '../services/moralis.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class PackagedetailsPage implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,private router: Router,
     private moralisService : MoralisService, private alertController: AlertController,
-    private toastController : ToastController) { }
+    private toastController : ToastController,private events: EventsService) { }
 
   ngOnInit() {
     const objId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -29,16 +30,14 @@ export class PackagedetailsPage implements OnInit {
      });
 
      this.getCurrentUser();
+  }
 
-
-
-
-
+  ionViewWillEnter() {
+    this.getCurrentUser();
   }
 
   async getCurrentUser() {
-    const resp = await this.moralisService.getCurrentUser();
-    this.email = resp.email;
+    this.email = localStorage.getItem('emailId');
     console.log(this.email);
 
   }
@@ -62,6 +61,12 @@ export class PackagedetailsPage implements OnInit {
   }
 
   foo() {
+    this.events.publishSomeData({
+      refresh:'true',
+      username: localStorage.getItem('username'),
+      email: this.email})
+      ;
+
     this.router.navigateByUrl('/listpackages');
     this.presentToast('Order updated successfully.');
   }

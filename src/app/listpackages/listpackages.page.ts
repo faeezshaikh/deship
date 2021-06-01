@@ -5,6 +5,7 @@ import { AlertController ,IonSlides,PopoverController } from '@ionic/angular';
 import { BalancesPage } from '../balances/balances.page';
 import { MoralisService } from '../services/moralis.service';
 import { ViewChild } from '@angular/core';
+import { EventsService } from '../services/events.service';
 
 
 
@@ -28,7 +29,8 @@ export class ListpackagesPage implements OnInit {
   isLoading = false;
 
   constructor(private router : Router,private moralisService: MoralisService,
-    private alertController: AlertController,public popoverController: PopoverController) {
+    private alertController: AlertController,public popoverController: PopoverController,
+    private eventsService: EventsService) {
 
     // this.retrieveList2();
     console.log(' Inside constructor');
@@ -53,6 +55,8 @@ export class ListpackagesPage implements OnInit {
 
 
    ionViewWillEnter() {
+
+    this.listenForEvent();
 
      this.retrieveList2();
      console.log(' Inside ionViewWillEnter');
@@ -190,5 +194,13 @@ export class ListpackagesPage implements OnInit {
       event.target.complete();
     }, 500);
   }
+
+  listenForEvent() {
+    this.eventsService.getObservable().subscribe((data) => {
+      if(data.refresh) {
+        this.retrieveList2();
+      };
+  });
+};
 
 }
