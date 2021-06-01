@@ -38,11 +38,14 @@ export class LoginPage implements OnInit {
     }
   }
 
+
+
   async login() {
     try {
       const user = await Moralis.User.logIn(this.username, this.password);
       console.log('logged in user:', user);
       localStorage.setItem('authenticated', 'yes');
+
       this.menu.enable(true);
       this.router.navigateByUrl('/listpackages');
     } catch (error) {

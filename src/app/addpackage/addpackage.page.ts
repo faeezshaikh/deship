@@ -41,6 +41,8 @@ export class AddpackagePage implements OnInit {
       delivery: ['', [Validators.nullValidator]],
       fragile: ['', [Validators.nullValidator]]
     });
+
+    console.log('User: ',this.moralisService.getCurrentUser());
   }
 
   goback() {

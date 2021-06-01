@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { MoralisService } from './services/moralis.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -8,6 +9,8 @@ import { MenuController } from '@ionic/angular';
 })
 export class AppComponent {
 
+  username:any;
+  email:any;
 
   public appPages = [
     { title: 'Packages', url: '/listpackages', icon: 'cube' },
@@ -18,8 +21,16 @@ export class AppComponent {
     { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor(private menu:MenuController,private router: Router) {
+  constructor(private menu:MenuController,private router: Router,private moralisService: MoralisService) {
+    this.getCurrentUser();
 
+
+  }
+
+  async getCurrentUser() {
+    const resp = await this.moralisService.getCurrentUser();
+    this.username = resp.username;
+    this.email = resp.email;
   }
 
   logout() {
