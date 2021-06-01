@@ -136,11 +136,9 @@ export class AddpackagePage implements OnInit {
   }
 
 
-  async getCurrentUser() {
-    const resp = await this.moralisService.getCurrentUser();
-    this.email = resp.email;
+  getCurrentUser() {
+    this.email = localStorage.getItem('emailId');
     console.log(this.email);
-
   }
 
   takePhoto() {

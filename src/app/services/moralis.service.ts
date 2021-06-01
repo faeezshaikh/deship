@@ -93,13 +93,13 @@ export class MoralisService {
 
   async getCurrentUser() {
     const user = await Moralis.User.current();
-    console.log(user.id);
+    console.log('Moralis current user:',user.id);
 
     const query = new Moralis.Query('User');
     const resp = await query.get(user.id);
     // const results = await user.find();
-    console.log(resp.get('username'));
-    console.log(resp.get('email'));
+    console.log('Username:',resp.get('username'));
+    console.log('Email:',resp.get('email'));
     return {'username':resp.get('username'),'email':resp.get('email')};
 
   }
