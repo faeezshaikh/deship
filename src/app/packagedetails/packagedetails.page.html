@@ -173,6 +173,12 @@
   <ion-button *ngIf="pkgdetails.status === 'Ready'" shape="round" (click)='presentAlertConfirm(pkgdetails)'>
     <i class="far fa-check-circle"></i> &nbsp;   Pickup
   </ion-button>
+
+  <ion-button *ngIf="pkgdetails.status === 'In Transit' && pkgdetails.creator === this.email" shape="round" (click)='presentAlertConfirm(pkgdetails)'>
+    <i class="far fa-check-circle"></i> &nbsp;   Confirm Delivery
+  </ion-button>
+
+
 </div>
 
 

@@ -96,4 +96,6 @@ export class PackagedetailsPage implements OnInit {
     await alert.present();
   }
 
+
+
 }

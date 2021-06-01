@@ -141,7 +141,8 @@ export class MoralisService {
               sender: resp.get('sender'),
               receiverPhone: resp.get('recieverPhone'),
               senderPhone: resp.get('senderPhone'),
-              miles: resp.get('miles')
+              miles: resp.get('miles'),
+              creator: resp.get('creator')
             };
     // query.get(id).then((pkg) => {
 
