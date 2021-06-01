@@ -3,14 +3,35 @@
     <ion-menu contentId="main-content" type="push" >
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>{{username}}</ion-list-header>
-          <ion-note>{{email}}</ion-note>
-          <p></p>
-          <div style="text-align: center">
 
-            <ion-button (click)="logout()">Logout</ion-button>
-          </div>
-          <p></p>
+          <ion-card color="light">
+            <div class="img-wrapper">
+              <img src="https://yt3.ggpht.com/ytc/AAUvwnjM_DpHBHNmws18cDs7mo-CsK8dXZMnjrLWN5KQ=s900-c-k-c0x00ffffff-no-rj" />
+              <ion-button color="light">
+                <ion-icon slot="icon-only" name="camera-outline" color="medium">
+                </ion-icon>
+              </ion-button>
+            </div>
+            <ion-card-content class="ion-text-center">
+              <h2>{{username}}</h2>
+              <ion-text color="medium">
+                <div style="display: flex;" class="ion-justify-content-center">
+                  <ion-icon name="mail-outline" color="medium">
+                  </ion-icon> &nbsp;
+                  <p>{{email}}</p>
+                </div>
+              </ion-text>
+            </ion-card-content>
+          </ion-card>
+
+
+
+
+
+
+
+
+
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
@@ -28,6 +49,13 @@
             <ion-label>{{ label }}</ion-label>
           </ion-item>
         </ion-list> -->
+
+        <p></p>
+        <div style="text-align: center">
+
+          <ion-button (click)="logout()">Logout</ion-button>
+        </div>
+        <p></p>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
