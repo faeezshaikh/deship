@@ -53,11 +53,18 @@ export class PackagedetailsPage implements OnInit {
   }
 
   pickup(img) {
-    this.moralisService.updateItem(img,this.email);
+    this.moralisService.updateItem(img,this.email,'In Transit');
+    this.foo();
+  }
+  confirmdelivery(img) {
+    this.moralisService.updateItem(img,this.email,'Delivered');
+    this.foo();
+  }
+
+  foo() {
     this.router.navigateByUrl('/listpackages');
     this.presentToast('Order updated successfully.');
   }
-
 
   async presentToast(msg) {
     const toast = await this.toastController.create({
@@ -68,7 +75,7 @@ export class PackagedetailsPage implements OnInit {
   }
 
 
-  async presentAlertConfirm(obj) {
+  async presentAlertConfirm(obj,state) {
     console.log(obj);
 
     const alert = await this.alertController.create({
@@ -86,7 +93,11 @@ export class PackagedetailsPage implements OnInit {
         }, {
           text: 'Okay',
           handler: () => {
+            if(state === 'pickup') {
               this.pickup(obj.img);
+            } else if(state === 'confirm') {
+              this.confirmdelivery(obj.img);
+            }
 
           }
         }

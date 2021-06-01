@@ -170,11 +170,11 @@
   <ion-button shape="round" fill="outline" (click)="goback()">Cancel
     <ion-icon slot="start" name="close-outline"  id="submitButton" ></ion-icon>
   </ion-button>
-  <ion-button *ngIf="pkgdetails.status === 'Ready' && pkgdetails.creator != this.email" shape="round" (click)='presentAlertConfirm(pkgdetails)'>
+  <ion-button *ngIf="pkgdetails.status === 'Ready' && pkgdetails.creator != this.email" shape="round" (click)="presentAlertConfirm(pkgdetails,'pickup')">
     <i class="far fa-check-circle"></i> &nbsp;   Pickup
   </ion-button>
 
-  <ion-button *ngIf="pkgdetails.status === 'In Transit' && pkgdetails.creator === this.email" shape="round" (click)='presentAlertConfirm(pkgdetails)'>
+  <ion-button *ngIf="pkgdetails.status === 'In Transit' && pkgdetails.creator === this.email" shape="round" (click)="presentAlertConfirm(pkgdetails,'confirm')">
     <i class="far fa-check-circle"></i> &nbsp;   Confirm Delivery
   </ion-button>
 

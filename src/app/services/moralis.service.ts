@@ -104,7 +104,7 @@ export class MoralisService {
 
   }
 
-   async updateItem(img,email) {
+   async updateItem(img,email,state) {
     const query = new Moralis.Query('Package');
     // console.log(id);
 
@@ -113,9 +113,13 @@ export class MoralisService {
 
     const pkg = results[0];
 
+    if(state === 'In Transit') {
 
-    pkg.set('status', 'In Transit');
-    pkg.set('mover',email);
+      pkg.set('status', 'In Transit');
+      pkg.set('mover',email);
+    } else if(state === 'Delivered') {
+      pkg.set('status', 'Delivered');
+    }
 
     pkg.save().then((resp) => {
       console.log('Update successful');
