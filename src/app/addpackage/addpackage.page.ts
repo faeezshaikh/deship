@@ -14,7 +14,7 @@ import { PhotoService } from '../services/photo.service';
 })
 export class AddpackagePage implements OnInit {
 
-  gems = 1;
+  gems = 100;
   days = 15;
   ionicForm: FormGroup;
   isSubmitted = false;
@@ -62,18 +62,18 @@ export class AddpackagePage implements OnInit {
   }
 
   rangeChanged(){
-    if (this.gems > 18 && this.gems < 20)
+    if (this.gems > 800 && this.gems < 900)
         {this.days = 1;}
 
-    if (this.gems > 15 && this.gems < 18)
+    if (this.gems > 600 && this.gems < 800)
         {this.days = 6;}
-    if (this.gems > 12 && this.gems < 15)
+    if (this.gems > 400 && this.gems < 600)
         {this.days = 7;}
-    if (this.gems > 8 && this.gems < 12)
+    if (this.gems > 300 && this.gems < 400)
        { this.days = 10;}
-    if (this.gems > 5 && this.gems < 8)
+    if (this.gems > 100 && this.gems < 300)
         {this.days = 12;}
-    if (this.gems > 0 && this.gems < 5)
+    if (this.gems > 0 && this.gems < 100)
         {this.days = 15;}
 
   }
@@ -136,21 +136,24 @@ export class AddpackagePage implements OnInit {
     this.isMining = true;
     const loader = await this.presentLoading();
     loader.present();
-    console.log('Range value eth:',this.ionicForm.value.range);
 
-    const resp = await this.moralisService.listPackage(this.ionicForm.value.range).then(res => {
-      console.log('Range value eth:',this.ionicForm.value.range);
+
+    const resp = await this.moralisService.listPackage(this.ionicForm.value.range/1000).then(res => {
+
 
       console.log('Success', res);
       const events = res.events.NewPackage;
       console.log(events);
       console.log(events.returnValues.packageId);
 
-
+      let photo:any = '';
+      if(this.photoService.photos) {
+        photo = this.photoService.photos[0].ipfs;
+      }
       loader.dismiss();
       this.moralisService.addToList('John Doe',this.ionicForm.value.pickupaddress,'345-345-34535',this.ionicForm.value.senderemail,
       this.ionicForm.value.address,this.ionicForm.value.mobile,
-        this.ionicForm.value.email,this.ionicForm.value.range,34,this.photoService.photos[0].ipfs,
+        this.ionicForm.value.email,this.ionicForm.value.range/1000,304,photo,
         this.ionicForm.value.fragile,this.ionicForm.value.instructions,
         this.ionicForm.value.delivery,'Ready',this.email,res.transactionHash,events.returnValues.packageId
         );

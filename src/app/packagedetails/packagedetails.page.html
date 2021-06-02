@@ -34,14 +34,14 @@
     </ion-col>
     <ion-col>
         <span style="color: tomato;">
-          <i class="fas fa-map-marked-alt fa-2x"></i> </span> &nbsp;50 miles
+          <i class="fas fa-map-marked-alt fa-2x"></i> </span> &nbsp;{{pkgdetails.miles}} miles
     </ion-col>
 
     <ion-col>
       <span style="color : blue;"> <i class="fas fa-cubes fa-2x"></i></span> &nbsp;Blockhain Transactions
       <ion-row *ngIf='pkgdetails.listTxnHash'>  &nbsp;  &nbsp;  &nbsp; - <a [href]='getListingUrl(pkgdetails.listTxnHash)'>View Txn for Listing </a></ion-row>
       <ion-row *ngIf='pkgdetails.pickupHash'>  &nbsp;  &nbsp;  &nbsp; - <a [href]='getListingUrl(pkgdetails.pickupHash)'> View Txn for Pick up </a></ion-row>
-      <ion-row *ngIf='pkgdetails.deliverynHash'>  &nbsp;  &nbsp;  &nbsp; - <a [href]='getListingUrl(pkgdetails.deliverynHash)'> View Txn for Delivery</a></ion-row>
+      <ion-row *ngIf='pkgdetails.deliveryHash'>  &nbsp;  &nbsp;  &nbsp; - <a [href]='getListingUrl(pkgdetails.deliveryHash)'> View Txn for Delivery</a></ion-row>
 
 
 

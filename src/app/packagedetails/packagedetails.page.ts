@@ -58,14 +58,14 @@ export class PackagedetailsPage implements OnInit {
      return await this.moralisService.getItemFromList(objId);
   }
 
-  async pickup(img,packageId) {
+  async pickup(img,packageId,payout) {
 
     const loader = await this.presentLoading();
     loader.present();
 
     // TODO: In take collateral from UI
 
-    const resp = await this.moralisService.pickPackage(packageId,5).then(res => {
+    const resp = await this.moralisService.pickPackage(packageId,payout/2).then(res => {
 
       console.log('Success', res);
       const events = res.events.NewShipping;
@@ -95,7 +95,7 @@ export class PackagedetailsPage implements OnInit {
       loader.dismiss();
 
       this.moralisService.updateItem(img,this.email,'Delivered',res.transactionHash);
-    this.foo();
+      this.foo();
 
     }).catch(err => {
       console.log(err);
@@ -150,7 +150,7 @@ export class PackagedetailsPage implements OnInit {
           text: 'Okay',
           handler: () => {
             if(state === 'pickup') {
-              this.pickup(obj.img,obj.packageId);
+              this.pickup(obj.img,obj.packageId,obj.gems);
             } else if(state === 'confirm') {
               this.confirmdelivery(obj.img,obj.packageId);
             }

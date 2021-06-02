@@ -10,6 +10,7 @@ export class MoralisService {
   packageList: any[] = [];
   abi:any;
   contract:any;
+  web3:any;
   public ethAddress:any = 'none';
   public ethAddressDisplay:any = 'none';
 
@@ -376,6 +377,9 @@ export class MoralisService {
        const transactions = await Moralis.Web3.getTransactions(options2);
        console.log(transactions);
 
+       const ethBalanceOnMumber = await Moralis.Web3.getERC20({chain: 'mumbai', symbol: 'MATIC'});
+       console.log('Balances for Eth on Mumbai Network: ',ethBalanceOnMumber);
+
        return {bnbBalances,maticBalances,ethBalances};
      } else {
        console.log('Connect to Wallet first.');
@@ -385,48 +389,50 @@ export class MoralisService {
 
     format(amountInWei) {
       const web3 = new Moralis.Web3();
+      // console.log('Converting..',amountInWei);
+
       const amountInEth = web3.utils.fromWei(amountInWei, 'ether');
       return amountInEth;
     }
 
 
     async enableWeb3(){
-      const web3 = await Moralis.Web3.enable();
-      this.contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
+      this.web3 = await Moralis.Web3.enable();
+      this.contract = new this.web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
     }
 
 
   async listPackage(value){
-    // const web3 = await Moralis.Web3.enable();
-    // const contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
+
+    // value will be 0.18
+    const web3 = new Moralis.Web3();
+    const wei = web3.utils.toWei(''+value, 'ether');
 
     console.log('Sending eth: ',value);
 
     const fundit = await  this.contract.methods.listPackage().send({
             from: localStorage.getItem('ethAddr') ,
-            value
+            value: wei
           });
     console.log(fundit);
     return fundit;
   }
 
   async pickPackage(pkgId,collateral){
-    // const web3 = await Moralis.Web3.enable();
-    // const contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
+    // collateral will be 0.09
+    const web3 = new Moralis.Web3();
+    const wei = web3.utils.toWei(''+collateral, 'ether');
 
     console.log('Sending collateral: ',collateral);
     const fundit = await  this.contract.methods.pickPackage(pkgId).send({
             from: localStorage.getItem('ethAddr') ,
-            value: collateral
+            value: wei
           });
     console.log(fundit);
     return fundit;
   }
 
   async confirmDelivery(pkgId){
-    // const web3 = await Moralis.Web3.enable();
-    // const contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
-
     const fundit = await  this.contract.methods.confirmDelivery(pkgId).send({
       from: localStorage.getItem('ethAddr') ,
       value: 0
