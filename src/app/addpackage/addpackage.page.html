@@ -54,16 +54,6 @@
           Address should be min 5 chars long.
         </span>
 
-        <ion-item>
-          <ion-label position="floating"> Sender Email *</ion-label>
-          <ion-input formControlName="senderemail" type="email"></ion-input>
-        </ion-item>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.senderemail.errors?.required">
-          Email is required.
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.senderemail.errors?.pattern">
-          Please provide valid email id.
-        </span>
 
       </ion-card-content>
     </ion-card>

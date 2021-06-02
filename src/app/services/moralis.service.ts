@@ -9,10 +9,13 @@ export class MoralisService {
 
   packageList: any[] = [];
   abi:any;
+  contract:any;
   public ethAddress:any = 'none';
   public ethAddressDisplay:any = 'none';
 
   constructor() {
+
+    this.enableWeb3();
 
     this.abi = [
       {
@@ -269,15 +272,8 @@ export class MoralisService {
     const image = webviewPath;
     const file = new Moralis.File(filename, { base64: base64Data });
     const savedIpfs = await file.saveIPFS();
-    // console.log('IPFS name and hash',file.ipfs() + ' ' + file.hash());
-
     const moralisUpload = await file.save();
-    // console.log('moralis upload', file.url());
-
-    return {'ipfs':file.ipfs(), 'hash':file.hash(),'moralisurl':file.url()};
-
-
-
+    return {ipfs:file.ipfs(), hash:file.hash(),moralisurl:file.url()};
   }
 
   async getCurrentUser() {
@@ -289,7 +285,7 @@ export class MoralisService {
     // const results = await user.find();
     console.log('Username:',resp.get('username'));
     console.log('Email:',resp.get('email'));
-    return {'username':resp.get('username'),'email':resp.get('email')};
+    return {username:resp.get('username'),email:resp.get('email')};
 
   }
 
@@ -394,70 +390,49 @@ export class MoralisService {
     }
 
 
+    async enableWeb3(){
+      const web3 = await Moralis.Web3.enable();
+      this.contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
+    }
+
+
   async listPackage(value){
-    const web3 = await Moralis.Web3.enable();
-    var contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
+    // const web3 = await Moralis.Web3.enable();
+    // const contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
 
-    console.log('Eth addr:',localStorage.getItem('ethAddr'));
+    console.log('Sending eth: ',value);
 
-    // call constant function (synchronous way)
-    // var msg = contract.methods.message().call().then(function(resp){
-    //   console.log('msg='+resp);
-    //   return resp;
-    // });
-
-    // contract.methods.listPackage().send();
-    // contract.listPackage({from: localStorage.getItem('ethAddr'), gas: 3000000, value: value}, function(err, res){});
-
-    // contract.listPackage({from: localStorage.getItem('ethAddr'), gas: 3000000, value: value}, function(err, res){});
-
-    const fundit = await  contract.methods.listPackage().send({
+    const fundit = await  this.contract.methods.listPackage().send({
             from: localStorage.getItem('ethAddr') ,
-            value: value
+            value
           });
     console.log(fundit);
-
-        return fundit;
+    return fundit;
   }
 
   async pickPackage(pkgId,collateral){
-    const web3 = await Moralis.Web3.enable();
-    var contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
+    // const web3 = await Moralis.Web3.enable();
+    // const contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
 
-    console.log('Eth addr:',localStorage.getItem('ethAddr'));
-
-    const fundit = await  contract.methods.pickPackage(pkgId).send({
+    console.log('Sending collateral: ',collateral);
+    const fundit = await  this.contract.methods.pickPackage(pkgId).send({
             from: localStorage.getItem('ethAddr') ,
             value: collateral
           });
     console.log(fundit);
-
-        return fundit;
+    return fundit;
   }
 
   async confirmDelivery(pkgId){
-    const web3 = await Moralis.Web3.enable();
-    var contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
+    // const web3 = await Moralis.Web3.enable();
+    // const contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
 
-    console.log('Eth addr:',localStorage.getItem('ethAddr'));
-
-    // const fundit = await  contract.methods.confirmDelivery(pkgId);
-
-  //  contract.methods.confirmDelivery(pkgId).call().then(function(resp){
-  //     console.log('msg='+resp);
-  //     return resp;
-  //   });
-
-
-  const fundit = await  contract.methods.confirmDelivery(pkgId).send({
-    from: localStorage.getItem('ethAddr') ,
-    value: 0
-  });
-  console.log(fundit);
-  return fundit;
-
-
-
+    const fundit = await  this.contract.methods.confirmDelivery(pkgId).send({
+      from: localStorage.getItem('ethAddr') ,
+      value: 0
+    });
+    console.log(fundit);
+    return fundit;
   }
 
 

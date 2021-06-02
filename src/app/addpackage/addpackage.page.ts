@@ -37,11 +37,15 @@ export class AddpackagePage implements OnInit {
   ngOnInit() {
 
     this.ionicForm = this.formBuilder.group({
+
+
+
+
       address: ['', [Validators.required, Validators.minLength(5)]],
       pickupaddress: ['', [Validators.required, Validators.minLength(5)]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      senderemail: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+
       range: ['', [Validators.min(1)]],
       instructions: ['', [Validators.nullValidator]],
       delivery: ['', [Validators.nullValidator]],
@@ -127,12 +131,15 @@ export class AddpackagePage implements OnInit {
   async addConfirmed(){
     this.isSubmitted = false;
 
-    this.gems = 1;
-    this.days = 15;
+    // this.gems = 1;
+    // this.days = 15;
     this.isMining = true;
     const loader = await this.presentLoading();
     loader.present();
+    console.log('Range value eth:',this.ionicForm.value.range);
+
     const resp = await this.moralisService.listPackage(this.ionicForm.value.range).then(res => {
+      console.log('Range value eth:',this.ionicForm.value.range);
 
       console.log('Success', res);
       const events = res.events.NewPackage;
