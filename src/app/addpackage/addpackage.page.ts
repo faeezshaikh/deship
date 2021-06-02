@@ -135,13 +135,17 @@ export class AddpackagePage implements OnInit {
     const resp = await this.moralisService.listPackage(this.ionicForm.value.range).then(res => {
 
       console.log('Success', res);
+      const events = res.events.NewPackage;
+      console.log(events);
+      console.log(events.returnValues.packageId);
+
 
       loader.dismiss();
       this.moralisService.addToList('John Doe',this.ionicForm.value.pickupaddress,'345-345-34535',this.ionicForm.value.senderemail,
       this.ionicForm.value.address,this.ionicForm.value.mobile,
         this.ionicForm.value.email,this.ionicForm.value.range,34,this.photoService.photos[0].ipfs,
         this.ionicForm.value.fragile,this.ionicForm.value.instructions,
-        this.ionicForm.value.delivery,'Ready',this.email,res.transactionHash
+        this.ionicForm.value.delivery,'Ready',this.email,res.transactionHash,events.returnValues.packageId
         );
       this.utilService.presentToast('Package has been successfully added.');
       this.ionicForm.reset();
@@ -151,9 +155,7 @@ export class AddpackagePage implements OnInit {
           loader.dismiss();
           this.presentToast('Error. Check your chain. Please log in to Metamask again and connect to Matic chain.');
 
-    }
-
-      );
+    });
 
   }
 
@@ -182,6 +184,5 @@ async presentLoading() {
     cssClass: 'my-custom-class',
     message: 'Please wait. Mining transaction on Matic. '
   });
-
 }
 }

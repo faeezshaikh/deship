@@ -11,20 +11,11 @@
 </ion-header>
 
 <ion-content >
-
-
-
-
       <ion-card>
-
-
-
         <ion-item>
 
 
             <img  src="{{pkgdetails.img}}"/>
-
-
 
 
 
@@ -37,20 +28,24 @@
 
  <ion-card-content>
 
-  <ion-row *ngIf="pkgdetails.status ==='Ready'">
+  <ion-row >
     <ion-col>
       <ion-button *ngIf="pkgdetails.status === 'Ready' && pkgdetails.creator != this.email"  fill="outline"> <i class="far fa-check-circle"></i> &nbsp;Pickup</ion-button>
     </ion-col>
     <ion-col>
-
         <span style="color: tomato;">
           <i class="fas fa-map-marked-alt fa-2x"></i> </span> &nbsp;50 miles
-
-
-
-
-
     </ion-col>
+
+    <ion-col>
+      <span style="color : blue;"> <i class="fas fa-cubes fa-2x"></i></span> &nbsp;Blockhain Transactions
+      <ion-row *ngIf='pkgdetails.listTxnHash'>  &nbsp;  &nbsp;  &nbsp; - <a [href]='getListingUrl(pkgdetails.listTxnHash)'>View Txn for Listing </a></ion-row>
+      <ion-row *ngIf='pkgdetails.pickupHash'>  &nbsp;  &nbsp;  &nbsp; - <a [href]='getListingUrl(pkgdetails.pickupHash)'> View Txn for Pick up </a></ion-row>
+      <ion-row *ngIf='pkgdetails.deliverynHash'>  &nbsp;  &nbsp;  &nbsp; - <a [href]='getListingUrl(pkgdetails.deliverynHash)'> View Txn for Delivery</a></ion-row>
+
+
+
+  </ion-col>
 
   </ion-row>
 
@@ -83,7 +78,7 @@
 
         <ion-item>
           <ion-label> Email *</ion-label>
-          <ion-label> {{pkgdetails.senderEmail}} </ion-label>
+          <ion-label> {{pkgdetails.creator}} </ion-label>
         </ion-item>
 
 

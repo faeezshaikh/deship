@@ -1,7 +1,7 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { EventsService } from '../services/events.service';
 import { MoralisService } from '../services/moralis.service';
 
@@ -17,7 +17,8 @@ export class PackagedetailsPage implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,private router: Router,
     private moralisService : MoralisService, private alertController: AlertController,
-    private toastController : ToastController,private events: EventsService) { }
+    private toastController : ToastController,private events: EventsService,
+    private loadingController: LoadingController) { }
 
   ngOnInit() {
     const objId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -38,7 +39,10 @@ export class PackagedetailsPage implements OnInit {
   }
 
 
-
+  getListingUrl(txnHash) {
+    let url = 'https://explorer-mumbai.maticvigil.com/tx/' + txnHash + '/logs';
+    return url;
+  }
   async getCurrentUser() {
     this.email = localStorage.getItem('emailId');
     console.log(this.email);
@@ -54,14 +58,58 @@ export class PackagedetailsPage implements OnInit {
      return await this.moralisService.getItemFromList(objId);
   }
 
-  pickup(img) {
-    this.moralisService.updateItem(img,this.email,'In Transit');
+  async pickup(img,packageId) {
+
+    const loader = await this.presentLoading();
+    loader.present();
+
+    // TODO: In take collateral from UI
+
+    const resp = await this.moralisService.pickPackage(packageId,5).then(res => {
+
+      console.log('Success', res);
+      const events = res.events.NewShipping;
+      console.log(events);
+      loader.dismiss();
+
+      this.moralisService.updateItem(img,this.email,'In Transit',res.transactionHash);
+      this.foo();
+
+    }).catch(err => {
+      console.log(err);
+          loader.dismiss();
+          this.presentToast('Error. Check your chain. Please log in to Metamask again and connect to Matic chain.');
+
+    });
+}
+  async confirmdelivery(img,packageId) {
+
+    const loader = await this.presentLoading();
+    loader.present();
+
+    const resp = await this.moralisService.confirmDelivery(packageId).then(res => {
+
+      console.log('Success', res);
+
+      console.log(res);
+      loader.dismiss();
+
+      this.moralisService.updateItem(img,this.email,'Delivered',res.transactionHash);
     this.foo();
+
+    }).catch(err => {
+      console.log(err);
+          loader.dismiss();
+          this.presentToast('Error. Check your chain. Please log in to Metamask again and connect to Matic chain.');
+
+    });
+
+
+
+
   }
-  confirmdelivery(img) {
-    this.moralisService.updateItem(img,this.email,'Delivered');
-    this.foo();
-  }
+
+
 
   foo() {
     this.events.publishSomeData({
@@ -102,9 +150,9 @@ export class PackagedetailsPage implements OnInit {
           text: 'Okay',
           handler: () => {
             if(state === 'pickup') {
-              this.pickup(obj.img);
+              this.pickup(obj.img,obj.packageId);
             } else if(state === 'confirm') {
-              this.confirmdelivery(obj.img);
+              this.confirmdelivery(obj.img,obj.packageId);
             }
 
           }
@@ -115,6 +163,12 @@ export class PackagedetailsPage implements OnInit {
     await alert.present();
   }
 
+  async presentLoading() {
+    return await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait. Mining transaction on Matic. '
+    });
+  }
 
 
 }

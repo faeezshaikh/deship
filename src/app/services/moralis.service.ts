@@ -230,7 +230,7 @@ export class MoralisService {
   }
 
   addToList(sender,senderAddr,senderPhone,senderEmail,receiverAddr,receiverPhone,receiverEmail,gems,miles,img,fragile
-    ,instructions,delivery,status,creator,txnHash) {
+    ,instructions,delivery,status,creator,listTxnHash,packageId) {
     const Package = Moralis.Object.extend('Package');
 
     const pkg = new Package();
@@ -249,7 +249,9 @@ export class MoralisService {
     pkg.set('confirm', delivery);
     pkg.set('status', status);
     pkg.set('creator', creator);
-    pkg.set('txnHash', txnHash);
+    pkg.set('listTxnHash', listTxnHash);
+
+    pkg.set('packageId', packageId);
 
 
     pkg.save().then((savedObject) => {
@@ -291,7 +293,7 @@ export class MoralisService {
 
   }
 
-   async updateItem(img,email,state) {
+   async updateItem(img,email,state,txnHash) {
     const query = new Moralis.Query('Package');
     // console.log(id);
 
@@ -304,8 +306,10 @@ export class MoralisService {
 
       pkg.set('status', 'In Transit');
       pkg.set('mover',email);
+      pkg.set('pickupHash',txnHash);
     } else if(state === 'Delivered') {
       pkg.set('status', 'Delivered');
+      pkg.set('deliveryHash',txnHash);
     }
 
     pkg.save().then((resp) => {
@@ -333,7 +337,11 @@ export class MoralisService {
               receiverPhone: resp.get('recieverPhone'),
               senderPhone: resp.get('senderPhone'),
               miles: resp.get('miles'),
-              creator: resp.get('creator')
+              creator: resp.get('creator'),
+              listTxnHash: resp.get('listTxnHash'),
+              packageId: resp.get('packageId'),
+              pickupHash: resp.get('pickupHash'),
+              deliveryHash: resp.get('deliveryHash')
             };
 
   }
@@ -410,6 +418,43 @@ export class MoralisService {
     console.log(fundit);
 
         return fundit;
+  }
+
+  async pickPackage(pkgId,collateral){
+    const web3 = await Moralis.Web3.enable();
+    var contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
+
+    console.log('Eth addr:',localStorage.getItem('ethAddr'));
+
+    const fundit = await  contract.methods.pickPackage(pkgId).send({
+            from: localStorage.getItem('ethAddr') ,
+            value: collateral
+          });
+    console.log(fundit);
+
+        return fundit;
+  }
+
+  async confirmDelivery(pkgId){
+    const web3 = await Moralis.Web3.enable();
+    var contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
+
+    console.log('Eth addr:',localStorage.getItem('ethAddr'));
+
+    // const fundit = await  contract.methods.confirmDelivery(pkgId);
+
+  //  contract.methods.confirmDelivery(pkgId).call().then(function(resp){
+  //     console.log('msg='+resp);
+  //     return resp;
+  //   });
+
+
+  const fundit = await  contract.methods.confirmDelivery(pkgId).send({
+    from: localStorage.getItem('ethAddr') ,
+    value: 0
+  });
+  console.log(fundit);
+  return fundit;
 
 
 
