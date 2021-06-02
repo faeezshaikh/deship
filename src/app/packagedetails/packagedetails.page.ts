@@ -34,7 +34,10 @@ export class PackagedetailsPage implements OnInit {
 
   ionViewWillEnter() {
     this.getCurrentUser();
+
   }
+
+
 
   async getCurrentUser() {
     this.email = localStorage.getItem('emailId');

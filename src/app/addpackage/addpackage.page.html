@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar color="primary" (click)="autopop()">
     <ion-buttons slot="start">&nbsp;
       <ion-button (click)="goback()">
         <ion-icon  name="chevron-back-outline"></ion-icon>
@@ -12,8 +12,8 @@
 <ion-content>
   <form [formGroup]='ionicForm' (ngSubmit)="submitForm()" novalidate>
 
-    <ion-card>
-      <ion-card-header>
+    <ion-card >
+      <ion-card-header >
         <ion-card-subtitle>Photo</ion-card-subtitle>
 
       </ion-card-header>

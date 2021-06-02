@@ -11,57 +11,12 @@ export class FolderPage implements OnInit {
   public folder: string;
   ethAddress:any = 'none';
   ethAddressDisplay:any = 'none';
-  abi:any;
+
 
   constructor(private activatedRoute: ActivatedRoute,
     private menu: MenuController,
     private router:Router) {
 
-
-      this.abi = [
-        {
-          "inputs": [
-            {
-              "internalType": "string",
-              "name": "initMessage",
-              "type": "string"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "constructor"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "internalType": "string",
-              "name": "newMessage",
-              "type": "string"
-            }
-          ],
-          "name": "update",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "message",
-          "outputs": [
-            {
-              "internalType": "string",
-              "name": "",
-              "type": "string"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        }
-      ];
 
 
 
@@ -102,17 +57,6 @@ export class FolderPage implements OnInit {
    }
   }
 
-  async connectoContract(){
-
-
-    const web3 = await Moralis.Web3.enable();
-    var contract = new web3.eth.Contract(this.abi, '0x65a11dE5F240D1Fe5997721301EF423700131e60');
-
-// call constant function (synchronous way)
-var msg = contract.methods.message().call().then(function(resp){
-  console.log('msg='+resp);
-  return resp;
-});
 
 console.log('Resp: ',msg);
 

@@ -8,10 +8,196 @@ declare let Moralis;
 export class MoralisService {
 
   packageList: any[] = [];
+  abi:any;
   public ethAddress:any = 'none';
   public ethAddressDisplay:any = 'none';
 
-  constructor() { }
+  constructor() {
+
+    this.abi = [
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_pkgId",
+            "type": "uint256"
+          }
+        ],
+        "name": "confirmDelivery",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "listPackage",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "stateMutability": "payable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "packageId",
+            "type": "uint256"
+          }
+        ],
+        "name": "NewDelivery",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "packageId",
+            "type": "uint256"
+          }
+        ],
+        "name": "NewPackage",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "uint256",
+            "name": "packageId",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "shipper",
+            "type": "address"
+          }
+        ],
+        "name": "NewShipping",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_pkgId",
+            "type": "uint256"
+          }
+        ],
+        "name": "pickPackage",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getContractBalance",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getMyBalance",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "packageId",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "packages",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "payout",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "shipperCollateral",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "shipper",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "isActive",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "status",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ];
+
+
+  }
 
 
    async retrieveList() {
@@ -26,7 +212,7 @@ export class MoralisService {
     this.packageList = [];
     for (let i = 0; i < results.length; i++) {
       const object = results[i];
-      // console.log(object.id + ' - Sender: ' + object.get('sender') + ' Receiver: ' + object.get('receiverAddr'));
+
       this.packageList.push(
         {id:object.id,sender:object.get('sender'),senderAddr:object.get('senderAddr'),
          senderPhone:object.get('senderPhone'),senderEmail:object.get('senderEmail'),
@@ -44,7 +230,7 @@ export class MoralisService {
   }
 
   addToList(sender,senderAddr,senderPhone,senderEmail,receiverAddr,receiverPhone,receiverEmail,gems,miles,img,fragile
-    ,instructions,delivery,status,creator) {
+    ,instructions,delivery,status,creator,txnHash) {
     const Package = Moralis.Object.extend('Package');
 
     const pkg = new Package();
@@ -63,6 +249,7 @@ export class MoralisService {
     pkg.set('confirm', delivery);
     pkg.set('status', status);
     pkg.set('creator', creator);
+    pkg.set('txnHash', txnHash);
 
 
     pkg.save().then((savedObject) => {
@@ -148,16 +335,7 @@ export class MoralisService {
               miles: resp.get('miles'),
               creator: resp.get('creator')
             };
-    // query.get(id).then((pkg) => {
 
-    //   console.log('Package details:' ,pkg.get('senderEmail'));
-    //   console.log('Package details:' ,pkg.get('senderAddr'));
-    //   console.log('Package details:' ,pkg.get('receiverAddr'));
-
-    // }, (error) => {
-    //   console.log('Error getting Package details:' ,error);
-
-    // });
   }
 
   async walletConnect2(){
@@ -181,11 +359,7 @@ export class MoralisService {
 
       const maticBalances = await Moralis.Web3.getAllERC20( { chain: 'mumbai', address: ethAddress});
       console.log('Balances for Matic Network: ',maticBalances);
-      // balances is array of objs. Each obj is:
-      // balance: "2475683695000000000"
-      // decimals: 18
-      // name: "Binance Coin"
-      // symbol: "BNB"
+
 
       const bnbBalances = await Moralis.Web3.getAllERC20( { chain: 'binance', address: ethAddress});
       console.log('Balances for Binance Network: ',bnbBalances);
@@ -210,5 +384,36 @@ export class MoralisService {
       const amountInEth = web3.utils.fromWei(amountInWei, 'ether');
       return amountInEth;
     }
+
+
+  async listPackage(value){
+    const web3 = await Moralis.Web3.enable();
+    var contract = new web3.eth.Contract(this.abi, '0x7e38C04f0659f93793111886F731CD2D863eB79a');
+
+    console.log('Eth addr:',localStorage.getItem('ethAddr'));
+
+    // call constant function (synchronous way)
+    // var msg = contract.methods.message().call().then(function(resp){
+    //   console.log('msg='+resp);
+    //   return resp;
+    // });
+
+    // contract.methods.listPackage().send();
+    // contract.listPackage({from: localStorage.getItem('ethAddr'), gas: 3000000, value: value}, function(err, res){});
+
+    // contract.listPackage({from: localStorage.getItem('ethAddr'), gas: 3000000, value: value}, function(err, res){});
+
+    const fundit = await  contract.methods.listPackage().send({
+            from: localStorage.getItem('ethAddr') ,
+            value: value
+          });
+    console.log(fundit);
+
+        return fundit;
+
+
+
+  }
+
 
 }

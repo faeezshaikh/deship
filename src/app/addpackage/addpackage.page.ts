@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MoralisService } from '../services/moralis.service';
 import { UtilService } from '../services/util.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { PhotoService } from '../services/photo.service';
 
 
@@ -19,6 +19,9 @@ export class AddpackagePage implements OnInit {
   ionicForm: FormGroup;
   isSubmitted = false;
   email:any;
+  loading;
+
+  isMining = false;
 
   delivery = false;
   fragile = false;
@@ -27,7 +30,9 @@ export class AddpackagePage implements OnInit {
           private utilService: UtilService,
           private moralisService:MoralisService,
           public alertController: AlertController,
-          public photoService: PhotoService) { }
+          public photoService: PhotoService,
+          private toastController: ToastController,
+          public loadingController: LoadingController) { }
 
   ngOnInit() {
 
@@ -119,21 +124,39 @@ export class AddpackagePage implements OnInit {
     await alert.present();
   }
 
-  addConfirmed(){
+  async addConfirmed(){
     this.isSubmitted = false;
 
     this.gems = 1;
     this.days = 15;
-    this.moralisService.addToList('John Doe',this.ionicForm.value.pickupaddress,'345-345-34535',this.ionicForm.value.senderemail,
-                                  this.ionicForm.value.address,this.ionicForm.value.mobile,
-                                    this.ionicForm.value.email,this.ionicForm.value.range,34,this.photoService.photos[0].ipfs,
-                                    this.ionicForm.value.fragile,this.ionicForm.value.instructions,
-                                    this.ionicForm.value.delivery,'Ready',this.email
-                                    );
-    this.utilService.presentToast('Package has been successfully added.');
-    this.ionicForm.reset();
-    this.goback();
+    this.isMining = true;
+    const loader = await this.presentLoading();
+    loader.present();
+    const resp = await this.moralisService.listPackage(this.ionicForm.value.range).then(res => {
+
+      console.log('Success', res);
+
+      loader.dismiss();
+      this.moralisService.addToList('John Doe',this.ionicForm.value.pickupaddress,'345-345-34535',this.ionicForm.value.senderemail,
+      this.ionicForm.value.address,this.ionicForm.value.mobile,
+        this.ionicForm.value.email,this.ionicForm.value.range,34,this.photoService.photos[0].ipfs,
+        this.ionicForm.value.fragile,this.ionicForm.value.instructions,
+        this.ionicForm.value.delivery,'Ready',this.email,res.transactionHash
+        );
+      this.utilService.presentToast('Package has been successfully added.');
+      this.ionicForm.reset();
+      this.goback();
+    }).catch(err => {
+      console.log(err);
+          loader.dismiss();
+          this.presentToast('Error. Check your chain. Please log in to Metamask again and connect to Matic chain.');
+
+    }
+
+      );
+
   }
+
 
 
   getCurrentUser() {
@@ -144,4 +167,21 @@ export class AddpackagePage implements OnInit {
   takePhoto() {
     this.photoService.addNewToGallery();
   }
+
+
+async presentToast(msg) {
+  const toast = await this.toastController.create({
+    message: msg,
+    duration: 2000
+  });
+  toast.present();
+}
+
+async presentLoading() {
+  return await this.loadingController.create({
+    cssClass: 'my-custom-class',
+    message: 'Please wait. Mining transaction on Matic. '
+  });
+
+}
 }
