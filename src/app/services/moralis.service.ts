@@ -444,14 +444,6 @@ export class MoralisService {
   async sendRegistrationEmail(email,username,pwd) {
     const params =  { sendTo: email, subject: 'Welcome to Shi-Net',
                   html: 'Your login username is : ' + username + ' and password is:' + pwd };
-    const ratings = await Moralis.Cloud.run('sendEmailToUser2', params);
+    const ratings = await Moralis.Cloud.run('sendEmailToUser', params);
   }
-
-  // Moralis.Cloud.define("sendEmailToUser", function (request) {
-  //   Moralis.Cloud.sendEmail({
-  //     to: request.params.sendTo,
-  //     subject: request.params.subject,
-  //     html: request.params.html
-  //   });
-  // });
 }
