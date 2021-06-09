@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 declare function signup(username,pass,email): void;
 import { ToastController } from '@ionic/angular';
+import { MoralisService } from '../services/moralis.service';
 declare let Moralis;
 
 
@@ -17,7 +18,8 @@ export class SignupPage implements OnInit {
   email;
   processingSignin=false;
 
-  constructor(public toastController: ToastController,private router:Router) {
+  constructor(public toastController: ToastController,private router:Router,
+        private moralisService : MoralisService) {
   }
 
   ngOnInit() {
@@ -39,6 +41,7 @@ async signmeup(){
 
     try {
       await user.signUp();
+      this.moralisService.sendRegistrationEmail(this.email,this.username,this.password);
       this.processingSignin=false;
       this.username='';
       this.password='';
