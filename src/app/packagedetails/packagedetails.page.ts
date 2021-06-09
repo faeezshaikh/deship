@@ -133,11 +133,17 @@ export class PackagedetailsPage implements OnInit {
 
   async presentAlertConfirm(obj,state) {
     console.log(obj);
+    let msg ;
+    if(state === 'pickup') {
+        msg = 'You will need to stake ' + obj.gems/2 + ' MATIC. Are you sure you want to pick this package?';
+    } else if (state === 'confirm') {
+        msg = 'Are you sure you want to confirm delivery of this package?';
+    }
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirm.',
-      message: 'Are you sure you want to pick this package?',
+      message: msg,
       buttons: [
         {
           text: 'Cancel',
@@ -170,5 +176,29 @@ export class PackagedetailsPage implements OnInit {
     });
   }
 
+  getProgressBarValue(pkgdetails){
+    if(pkgdetails.status === 'In Transit') {
+      return '0.5';
+    }
+    if(pkgdetails.status === 'Delivered') {
+      return '1';
+    }
+    if(pkgdetails.status === 'Ready') {
+      return '0.2';
+    }
+
+  }
+
+  getProgressBarText(pkgdetails){
+    if(pkgdetails.status === 'In Transit') {
+      return 'In Transit';
+    }
+    if(pkgdetails.status === 'Delivered') {
+      return 'Delivered';
+    }
+    if(pkgdetails.status === 'Ready') {
+      return 'Ready for pickup';
+    }
+  }
 
 }
