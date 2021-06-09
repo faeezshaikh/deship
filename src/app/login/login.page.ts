@@ -15,7 +15,7 @@ declare let Moralis;
 export class LoginPage implements OnInit {
   username;
   password;
-  processingSignin;
+  processingSignin = false;
   constructor(
     private router: Router,
     private menu: MenuController,
@@ -27,13 +27,16 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.username = '';
     this.password = '';
+    this.processingSignin = false;
     this.isLoggedIn();
   }
 
-  gotosignup() {
-    this.router.navigateByUrl('/signup');
+  ionViewWillEnter() {
+    this.username = '';
+    this.password = '';
+    this.processingSignin = false;
+    this.isLoggedIn();
   }
-
 
   isLoggedIn() {
     if(localStorage.getItem('authenticated') === 'yes') {
@@ -46,6 +49,7 @@ export class LoginPage implements OnInit {
 
   async login() {
     try {
+      this.processingSignin = true;
       const user = await Moralis.User.logIn(this.username, this.password);
       console.log('logged in user:', user);
       localStorage.setItem('authenticated', 'yes');
@@ -82,5 +86,10 @@ export class LoginPage implements OnInit {
       duration: 2000,
     });
     toast.present();
+  }
+
+  clear(){
+    this.username = '';
+    this.password = '';
   }
 }

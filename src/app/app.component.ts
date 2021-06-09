@@ -14,12 +14,12 @@ export class AppComponent {
   email:any;
 
   public appPages = [
-    { title: 'Packages', url: '/listpackages', icon: 'cube' },
-    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-    { title: 'News', url: '/news/nytimes', icon: 'warning' },
-    { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
+    { title: 'Packages', url: '/listpackages', icon: 'cube' ,tbd:false},
+    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart',tbd:true },
+    { title: 'Archived', url: '/folder/Archived', icon: 'archive',tbd:true },
+    // { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
+    // { title: 'News', url: '/news/nytimes', icon: 'warning' },
+    // { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(private menu:MenuController,private router: Router,
@@ -50,7 +50,7 @@ export class AppComponent {
     localStorage.removeItem('ethAddr');
     localStorage.removeItem('ethAddrDisp');
     this.menu.enable(false);
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/login');
 
   }
 

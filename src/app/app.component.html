@@ -37,6 +37,8 @@
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
+              <!-- <ion-icon name="chevron-forward-outline" slot="end"></ion-icon> -->
+              <ion-badge style="font-size: 60%;" *ngIf="p.tbd == true" slot="end" color="primary">Coming Soon</ion-badge>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
