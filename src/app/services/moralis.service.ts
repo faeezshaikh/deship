@@ -338,7 +338,8 @@ export class MoralisService {
               listTxnHash: resp.get('listTxnHash'),
               packageId: resp.get('packageId'),
               pickupHash: resp.get('pickupHash'),
-              deliveryHash: resp.get('deliveryHash')
+              deliveryHash: resp.get('deliveryHash'),
+              mover: resp.get('mover')
             };
 
   }
@@ -444,6 +445,31 @@ export class MoralisService {
   async sendRegistrationEmail(email,username,pwd) {
     const params =  { sendTo: email, subject: 'Welcome to Shi-Net',
                   html: 'Your login username is : ' + username + ' and password is:' + pwd };
+                  console.log(params);
+    const ratings = await Moralis.Cloud.run('sendEmailToUser', params);
+  }
+
+  async sendPickupEmail(sendToEmail, pickerEmail) {
+    const params =  { sendTo: sendToEmail, subject: 'Pikcup Notification',
+                  html: 'Your package was picked up by user email: ' + pickerEmail + '.' };
+                  console.log(params);
+    const ratings = await Moralis.Cloud.run('sendEmailToUser', params);
+  }
+
+  async sendDropoffEmail(sendToEmail, pickerEmail) {
+
+    const params =  { sendTo: sendToEmail, subject: 'Delivery Notification',
+                  html: 'Your package was delivered up by user email: ' + pickerEmail +
+                      '. Please confirm delivery on the Dapp to close the transaction.' };
+                      console.log(params);
+
+    const ratings = await Moralis.Cloud.run('sendEmailToUser', params);
+  }
+
+  async sendDeliveryConfirmEmail(sendToEmail) {
+    const params =  { sendTo: sendToEmail, subject: 'Great news! You\'ve received money',
+                  html: 'Your wallet was just credited with the payout amount for delivering the package on Shi-Net' };
+                  console.log(params);
     const ratings = await Moralis.Cloud.run('sendEmailToUser', params);
   }
 }

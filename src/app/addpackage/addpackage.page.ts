@@ -94,7 +94,8 @@ export class AddpackagePage implements OnInit {
       return false;
     } else {
       console.log(this.ionicForm.value);
-      this.presentAlertConfirm('Are you sure you want to add?');
+      const cost = this.ionicForm.value.range / 1000;
+      this.presentAlertConfirm('This will cost you ' + cost + ' MATIC. Are you sure you want to continue?');
 
     }
 

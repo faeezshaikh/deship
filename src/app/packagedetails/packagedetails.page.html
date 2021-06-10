@@ -32,9 +32,15 @@
 
   <ion-row >
     <ion-col>
-      <ion-button *ngIf="pkgdetails.status === 'Ready' && pkgdetails.creator != this.email"  fill="outline"> <i class="far fa-check-circle"></i> &nbsp;Pickup</ion-button>
+      <ion-button *ngIf="pkgdetails.status === 'Ready' && pkgdetails.creator != this.email"  fill="outline" (click)="presentAlertConfirm(pkgdetails,'pickup')"> <i class="far fa-check-circle"></i> &nbsp;Pickup</ion-button>
       <ion-badge *ngIf="pkgdetails.status === 'Delivered'"  color="success">Delivered</ion-badge>
       <ion-badge *ngIf="pkgdetails.status === 'In Transit'"  color="warning">In Transit</ion-badge>
+      <ion-row *ngIf="pkgdetails.status === 'In Transit' && pkgdetails.mover === this.email" >
+        <ion-button  fill="outline" (click)="presentAlertConfirm(pkgdetails,'notify')"> <i class="far fa-bell"></i> &nbsp;&nbsp;Notify sender</ion-button>
+      </ion-row>
+      <ion-row *ngIf="pkgdetails.status === 'In Transit' && pkgdetails.creator === this.email" >
+        <ion-button  fill="outline" (click)="presentAlertConfirm(pkgdetails,'confirm')"> <i class="far fa-bell"></i> &nbsp;&nbsp;Confirm Delivery</ion-button>
+      </ion-row>
     </ion-col>
     <ion-col>
       <ion-progress-bar color="primary" value="{{getProgressBarValue(pkgdetails)}}"></ion-progress-bar> {{getProgressBarText(pkgdetails)}}
@@ -78,13 +84,13 @@
 
 
         <ion-item>
-          <ion-label > Phone *</ion-label>
+          <ion-label > Sender Phone *</ion-label>
           <ion-label> {{pkgdetails.senderPhone}} </ion-label>
         </ion-item>
 
 
         <ion-item>
-          <ion-label> Email *</ion-label>
+          <ion-label>Sender Email *</ion-label>
           <ion-label> {{pkgdetails.creator}} </ion-label>
         </ion-item>
 
@@ -107,13 +113,13 @@
 
 
     <ion-item>
-      <ion-label > Phone *</ion-label>
+      <ion-label > Receiver Phone *</ion-label>
       <ion-label> {{pkgdetails.receiverPhone}} </ion-label>
     </ion-item>
 
 
     <ion-item>
-      <ion-label > Email *</ion-label>
+      <ion-label > Receiver Email *</ion-label>
       <ion-label> {{pkgdetails.receiverEmail}} </ion-label>
     </ion-item>
 
@@ -160,12 +166,12 @@
 
   <ion-item>
     <ion-label>Delivery Payout:</ion-label>
-    <ion-label> {{pkgdetails.gems}} <ion-icon name="diamond-outline"></ion-icon></ion-label>
+    <ion-label> {{pkgdetails.gems}} MATIC</ion-label>
   </ion-item>
 
   <ion-item>
     <ion-label>Shipper stake:</ion-label>
-    <ion-label> {{pkgdetails.gems / 2}} <ion-icon name="diamond-outline"></ion-icon></ion-label>
+    <ion-label> {{pkgdetails.gems / 2}} MATIC</ion-label>
   </ion-item>
 
   <ion-card-content>

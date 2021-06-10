@@ -21,20 +21,24 @@ export class PackagedetailsPage implements OnInit {
     private loadingController: LoadingController) { }
 
   ngOnInit() {
+    this.init();
+  }
+
+  private init() {
     const objId = this.activatedRoute.snapshot.paramMap.get('id');
     console.log(objId);
     const that = this;
-    this.getDetails(objId).then(function(resp) {
+    this.getDetails(objId).then(function (resp) {
       that.pkgdetails = resp;
       console.log(that.pkgdetails);
 
-     });
+    });
 
-     this.getCurrentUser();
+    this.getCurrentUser();
   }
 
   ionViewWillEnter() {
-    this.getCurrentUser();
+    this.init();
 
   }
 
@@ -58,12 +62,15 @@ export class PackagedetailsPage implements OnInit {
      return await this.moralisService.getItemFromList(objId);
   }
 
-  async pickup(img,packageId,payout) {
+  notifySender(senderEmail, moverEmail) {
+    this.moralisService.sendDropoffEmail(senderEmail,moverEmail);
+    this.presentToast('Email was successfully sent to the sender');
+
+  }
+  async pickup(img,packageId,payout,creator,mover) {
 
     const loader = await this.presentLoading();
     loader.present();
-
-    // TODO: In take collateral from UI
 
     const resp = await this.moralisService.pickPackage(packageId,payout/2).then(res => {
 
@@ -73,7 +80,9 @@ export class PackagedetailsPage implements OnInit {
       loader.dismiss();
 
       this.moralisService.updateItem(img,this.email,'In Transit',res.transactionHash);
+
       this.foo();
+      this.moralisService.sendPickupEmail(creator,mover);
 
     }).catch(err => {
       console.log(err);
@@ -82,7 +91,7 @@ export class PackagedetailsPage implements OnInit {
 
     });
 }
-  async confirmdelivery(img,packageId) {
+  async confirmdelivery(img,packageId,mover) {
 
     const loader = await this.presentLoading();
     loader.present();
@@ -96,6 +105,7 @@ export class PackagedetailsPage implements OnInit {
 
       this.moralisService.updateItem(img,this.email,'Delivered',res.transactionHash);
       this.foo();
+      this.moralisService.sendDeliveryConfirmEmail(mover);
 
     }).catch(err => {
       console.log(err);
@@ -125,7 +135,7 @@ export class PackagedetailsPage implements OnInit {
   async presentToast(msg) {
     const toast = await this.toastController.create({
       message: msg,
-      duration: 2000
+      duration: 2500
     });
     toast.present();
   }
@@ -138,7 +148,9 @@ export class PackagedetailsPage implements OnInit {
         msg = 'You will need to stake ' + obj.gems/2 + ' MATIC. Are you sure you want to pick this package?';
     } else if (state === 'confirm') {
         msg = 'Are you sure you want to confirm delivery of this package?';
-    }
+    } else if (state === 'notify') {
+      msg = 'This will send an email to notify the sender that the package has been delivered. Do you want to continue?';
+  }
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -156,10 +168,12 @@ export class PackagedetailsPage implements OnInit {
           text: 'Okay',
           handler: () => {
             if(state === 'pickup') {
-              this.pickup(obj.img,obj.packageId,obj.gems);
+              this.pickup(obj.img,obj.packageId,obj.gems,obj.creator,obj.mover);
             } else if(state === 'confirm') {
-              this.confirmdelivery(obj.img,obj.packageId);
-            }
+              this.confirmdelivery(obj.img,obj.packageId,obj.mover);
+            } else if (state === 'notify') {
+             this.notifySender(obj.creator,obj.mover);
+          }
 
           }
         }
