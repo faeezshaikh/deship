@@ -1,13 +1,9 @@
-# deship
+# Shi-Net (pronounced Shy Net)
 
-1. Show buttons / labels in details page for every status - in tranist, delivered etc. - roadmap
-5. Send email on package status update
-6. Cloud function use case.
-7.  Login and Sign up spinner and email.
-8. Clear buttons - sign up , login
-8. Video
+ShiNet is a decentrlized shipping and social network built on Ethereum and powered by Moralis and Polygon Metic network.
+
+The purpose of ShiNet is to democratize and decentralize shipping by directly connecting 
+package senders with shippers without any need for intermediaries like FedEx, UPS, USPS or the like.
 
 
-
-4. Show all txns for wallet.
-6. Smart contract creation
+![Alt text here](src/assets/shinet.png)
