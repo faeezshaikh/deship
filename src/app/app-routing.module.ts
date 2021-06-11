@@ -39,7 +39,8 @@ const routes: Routes = [
   },
   {
     path: 'addpackage',
-    loadChildren: () => import('./addpackage/addpackage.module').then( m => m.AddpackagePageModule)
+    loadChildren: () => import('./addpackage/addpackage.module').then( m => m.AddpackagePageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'balances',
@@ -47,7 +48,8 @@ const routes: Routes = [
   },
   {
     path: 'packagedetails',
-    loadChildren: () => import('./packagedetails/packagedetails.module').then( m => m.PackagedetailsPageModule)
+    loadChildren: () => import('./packagedetails/packagedetails.module').then( m => m.PackagedetailsPageModule),
+    canLoad: [AuthGuard]
   }
 ];
 

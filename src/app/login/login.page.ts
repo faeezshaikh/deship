@@ -92,4 +92,8 @@ export class LoginPage implements OnInit {
     this.username = '';
     this.password = '';
   }
+
+  gotosignup() {
+    this.router.navigateByUrl('/signup');
+  }
 }

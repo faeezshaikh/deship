@@ -458,7 +458,7 @@ export class MoralisService {
 
   async sendDropoffEmail(sendToEmail, pickerEmail) {
 
-    const params =  { sendTo: sendToEmail, subject: 'Delivery Notification',
+    const params =  { sendTo: sendToEmail, subject: 'Your package was delivered',
                   html: 'Your package was delivered up by user email: ' + pickerEmail +
                       '. Please confirm delivery on the Dapp to close the transaction.' };
                       console.log(params);

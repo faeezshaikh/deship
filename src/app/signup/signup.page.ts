@@ -86,9 +86,9 @@ async presentToast(msg) {
   toast.present();
 }
 
-// gotologin(){
-//   this.router.navigateByUrl('/login');
-// }
+gotologin(){
+  this.router.navigateByUrl('/login');
+}
 
  clear(){
   this.username='';
