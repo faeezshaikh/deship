@@ -14,3 +14,6 @@ package senders with shippers without any need for intermediaries like FedEx, UP
 # Try it out:
 
 https://dxskhuqre3qa.moralis.io/
+
+
+![Alt text here](src/assets/uml/shinet.png)
