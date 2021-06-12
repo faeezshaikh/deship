@@ -16,10 +16,21 @@ package senders with shippers without any need for intermediaries like FedEx, UP
 https://dxskhuqre3qa.moralis.io/
 
 -----
-<br/><br/>
-
-### Listing Package on the platform: 
 <br/>
 
+### 1. Sender lists a package on the platform:
 
-![Alt text here](src/assets/uml/Shinet1.png)
+
+
+![Alt text here](src/assets/uml/Shinet-Page-1.png)
+<br/>
+
+### 2. Shipper picks up the package:
+
+
+![Alt text here](src/assets/uml/Shinet-Page-2.png)
+
+<br/>
+
+### 3. Package drop off and payment through smart contract:
+![Alt text here](src/assets/uml/Shinet-Page-3.png)
