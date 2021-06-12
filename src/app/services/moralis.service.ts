@@ -367,21 +367,22 @@ export class MoralisService {
       console.log('Balances for Matic Network: ',maticBalances);
 
 
-      const bnbBalances = await Moralis.Web3.getAllERC20( { chain: 'binance', address: ethAddress});
-      console.log('Balances for Binance Network: ',bnbBalances);
+      const bnbBalances = await Moralis.Web3.getERC20( { chain: 'binance',address: ethAddress});
+      console.log('Binance Balance for Binance Network: ',bnbBalances);
 
-      const ethBalances = await Moralis.Web3.getAllERC20( { chain: 'eth', address: ethAddress});
-      console.log('Balances for Binance Network: ',ethBalances);
 
-      const options2 = { chain: 'binance', address: ethAddress, order: 'desc' };
-      console.log(options2);
-       const transactions = await Moralis.Web3.getTransactions(options2);
-       console.log(transactions);
+      const ethBalances = await Moralis.Web3.getERC20( { chain: 'eth',  symbol:'ETH',address: ethAddress});
+      console.log('Balances for Ethereum Network: ',ethBalances);
 
-       const ethBalanceOnMumber = await Moralis.Web3.getERC20({chain: 'mumbai', symbol: 'MATIC'});
-       console.log('Balances for Eth on Mumbai Network: ',ethBalanceOnMumber);
+      // const options2 = { chain: 'binance', address: ethAddress, order: 'desc' };
+      // console.log(options2);
+      //  const transactions = await Moralis.Web3.getTransactions(options2);
+      //  console.log(transactions);
 
-       return {bnbBalances,maticBalances,ethBalances};
+      //  const ethBalanceOnMumber = await Moralis.Web3.getERC20({chain: 'mumbai', symbol: 'MATIC'});
+      //  console.log('Balances for Eth on Mumbai Network: ',ethBalanceOnMumber);
+
+       return {maticBalances,bnbBalances,ethBalances};
      } else {
        console.log('Connect to Wallet first.');
 

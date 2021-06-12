@@ -22,9 +22,9 @@ export class BalancesPage implements OnInit {
   async getBalances() {
     this.gettingBalances = true;
     const resp = await this.moralisService.getBalances();
-    console.log(resp);
-    this.bnbBalances = resp.bnbBalances;
+    console.log('Balances:',resp);
     this.maticBalances = resp.maticBalances;
+    this.bnbBalances = resp.bnbBalances;
     this.ethBalances = resp.ethBalances;
     console.log(this.bnbBalances);
     console.log(this.maticBalances);

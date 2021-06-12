@@ -12,9 +12,10 @@
 
       <ion-spinner  *ngIf="gettingBalances" name="circles" color="primary"></ion-spinner>
       <span *ngIf="!gettingBalances" >
-      <ion-row  *ngFor='let token of ethBalances '>
-        <ion-col>{{format(token.balance) | number:'1.1-5'}}</ion-col>
-        <ion-col>{{token.symbol || 'ERC20'}}</ion-col>
+      <!-- <ion-row  *ngFor='let token of ethBalances '> -->
+      <ion-row  *ngIf='ethBalances'>
+        <ion-col>{{format(ethBalances.balance) | number:'1.1-5'}}</ion-col>
+        <ion-col>{{ethBalances.symbol || 'ERC20'}}</ion-col>
     </ion-row>
   </span>
 
@@ -51,9 +52,10 @@
       <ion-spinner  *ngIf="gettingBalances" name="circles" color="primary"></ion-spinner>
       <span *ngIf="!gettingBalances" >
 
-        <ion-row *ngFor='let token of bnbBalances '>
-          <ion-col>{{format(token.balance) | number:'1.1-5'}}</ion-col>
-          <ion-col>{{token.symbol || 'ERC20'}}</ion-col>
+        <!-- <ion-row *ngFor='let token of bnbBalances '> -->
+        <ion-row *ngIf='bnbBalances '>
+          <ion-col>{{format(bnbBalances.balance) | number:'1.1-5'}}</ion-col>
+          <ion-col>{{bnbBalances.symbol || 'ERC20'}}</ion-col>
         </ion-row>
       </span>
     </ion-card-content>
