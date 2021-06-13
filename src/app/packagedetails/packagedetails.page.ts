@@ -68,7 +68,8 @@ export class PackagedetailsPage implements OnInit {
 
   }
   async pickup(img,packageId,payout,creator,mover) {
-
+    console.log('Mover is :',mover);
+    
     const loader = await this.presentLoading();
     loader.present();
 
@@ -143,6 +144,7 @@ export class PackagedetailsPage implements OnInit {
 
   async presentAlertConfirm(obj,state) {
     console.log(obj);
+    console.log('Mover:',this.email);
     let msg ;
     if(state === 'pickup') {
         msg = 'You will need to stake ' + obj.gems/2 + ' MATIC. Are you sure you want to pick this package?';
@@ -168,7 +170,7 @@ export class PackagedetailsPage implements OnInit {
           text: 'Okay',
           handler: () => {
             if(state === 'pickup') {
-              this.pickup(obj.img,obj.packageId,obj.gems,obj.creator,obj.mover);
+              this.pickup(obj.img,obj.packageId,obj.gems,obj.creator,this.email);
             } else if(state === 'confirm') {
               this.confirmdelivery(obj.img,obj.packageId,obj.mover);
             } else if (state === 'notify') {

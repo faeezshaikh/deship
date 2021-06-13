@@ -9,9 +9,9 @@ import { MoralisService } from '../services/moralis.service';
 })
 export class BalancesPage implements OnInit {
 
-  bnbBalances: any[];
+  bnbBalances: any;
   maticBalances: any[];
-  ethBalances: any[];
+  ethBalances: any;
   gettingBalances = false;
   constructor(private moralisService : MoralisService) { }
 
