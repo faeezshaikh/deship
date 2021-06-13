@@ -55,9 +55,7 @@ Blockchain
     - Polygon (Matic) Mumbai Testnet
 
 UI
-    - Angular
-
-    
+    - Angular    
 ```
 
 # Moralis features used:
